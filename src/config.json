@@ -1,0 +1,5 @@
+{
+	"api": {
+		"invokeUrl": "https://apghi0rhm8.execute-api.us-west-2.amazonaws.com/prod"
+	}
+}

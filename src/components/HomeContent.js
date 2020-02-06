@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
-export default function HomeContent() {
+function HomeContent() {
   return (
     <section className="container">
       <p className="columns features">
@@ -73,3 +73,5 @@ export default function HomeContent() {
     </section>
   );
 }
+
+export default HomeContent;

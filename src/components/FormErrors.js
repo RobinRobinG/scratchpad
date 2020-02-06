@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 function FormErrors(props) {
   if (
@@ -9,11 +9,11 @@ function FormErrors(props) {
       <div className="error container mt-2 invalid">
         <div className="row justify-content-center">
           {props.formerrors.passwordmatch
-            ? "Password value does not match confirm password value"
-            : ""}
+            ? 'Password value does not match confirm password value'
+            : ''}
         </div>
         <div className="row justify-content-center">
-          {props.formerrors.blankfield ? "All fields are required" : ""}
+          {props.formerrors.blankfield ? 'All fields are required' : ''}
         </div>
       </div>
     );

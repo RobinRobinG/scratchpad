@@ -1,13 +1,16 @@
 import React from 'react';
+import Notes from './Notes';
 
-export default function Hero() {
+function Hero() {
   return (
-    <section className="hero is-primary">
+    <section className="hero">
       <div className="hero-body">
         <div className="container">
-          <img src="energy.jpg" alt="conserve energy" />
+          <Notes />
         </div>
       </div>
     </section>
-  )
+  );
 }
+
+export default Hero;

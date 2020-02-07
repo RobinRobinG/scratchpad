@@ -1,20 +1,36 @@
 h1 {
   font-size: 2em;
 }
+.input-control {
+  margin: 10px 20px;
+}
+
+.new-note {
+  margin-bottom: 2rem;
+}
+
+.navbar {
+  margin-bottom: 30px;
+}
 
 .container img {
   width: 100vw;
 }
+
 .product {
   border: 1px solid #000;
 }
 
-.product-title {
+.note-title {
   font-weight: bold;
   font-size: 1.2em;
 }
 
-.product-id {
+.note-body {
+  font-size: 1em;
+}
+
+.note-id {
   font-size: 0.8em;
   margin: 1em 0;
 }

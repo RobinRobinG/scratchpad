@@ -1,12 +1,9 @@
 import React from 'react';
 
-const CardContent = ({ title, body }) => {
+const CardContent = ({ children }) => {
   return (
-    <div className="card-content">
-      <div className="content">
-        <h4>{title}</h4>
-        <p>{body}</p>
-      </div>
+    <div className="card is-shady">
+      <div className="card-content">{children}</div>
     </div>
   );
 };

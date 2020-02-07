@@ -1,13 +1,17 @@
 import React, { useState, Fragment } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import Button from './Button';
+import Input from './Input';
+import TextArea from './TextArea';
+import CardContent from './CardContent';
 
 function renderNoteEntry({ title, body, id }) {
   return (
     <Fragment>
-      <p className="product-title">{title}</p>
-      <p className="product-title">{body}</p>
-      <p className="product-id">id: {id}</p>
+      <p className="note-title">{title}</p>
+      <p className="note-body">{body}</p>
+      <p className="note-id">id: {id}</p>
     </Fragment>
   );
 }
@@ -22,29 +26,21 @@ function renderEditInput({
 }) {
   return (
     <Fragment>
-      <p>Edit product name</p>
-      <input
-        className="input is-medium"
-        type="text"
-        placeholder="Title"
-        value={noteTitle}
-        onChange={onUpdateNoteTitle}
-      />
-      <input
-        className="input is-medium"
-        type="text"
+      <p>Edit</p>
+      <Input value={noteTitle} label="Title" onChange={onUpdateNoteTitle} />
+      <TextArea
         placeholder="Note"
         value={noteBody}
         onChange={onUpdateNoteBody}
+        row="5"
       />
       <p className="product-id">id: {id}</p>
-      <button
-        type="submit"
-        className="button is-info is-small"
+      <Button
         onClick={handleNoteEditSaveOnClick}
-      >
-        save
-      </button>
+        size="is-small"
+        color="is-info"
+        label="Save"
+      />
     </Fragment>
   );
 }
@@ -55,10 +51,10 @@ function renderEditAndDelete({ handleNoteEditOnClick, handleDeleteNote, id }) {
       <a href="/" onClick={handleNoteEditOnClick} className="product-edit-icon">
         <FontAwesomeIcon icon={faEdit} />
       </a>
-      <button
-        onClick={event => handleDeleteNote(id, event)}
-        className="delete"
-      ></button>
+
+      <button onClick={event => handleDeleteNote(id, event)} className="delete">
+        <FontAwesomeIcon icon={faEdit} />
+      </button>
     </Fragment>
   );
 }
@@ -92,7 +88,7 @@ const Note = props => {
   const onUpdateNoteBody = event => setNoteBody(event.target.value);
 
   return (
-    <div className="product tile is-child box notification is-white">
+    <CardContent>
       {isAdmin &&
         renderEditAndDelete({ handleNoteEditOnClick, handleDeleteNote, id })}
       {isEditMode
@@ -105,7 +101,7 @@ const Note = props => {
             handleNoteEditSaveOnClick
           })
         : renderNoteEntry({ body, title, id })}
-    </div>
+    </CardContent>
   );
 };
 

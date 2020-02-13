@@ -5,12 +5,12 @@ import {
   Switch,
   Redirect
 } from 'react-router-dom';
-import './App.css';
 import Navbar from './components/Navbar';
-import Home from './pages/Home';
+import Home from './components/Home';
 import Notes from './components/Notes';
 import TakeNote from './components/TakeNote';
 import Footer from './components/Footer';
+import './App.scss';
 
 const App = () => {
   return (

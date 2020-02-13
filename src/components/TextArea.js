@@ -1,17 +1,18 @@
 import React from 'react';
+import { FormControl, TextareaAutosize } from '@material-ui/core';
 
-const TextArea = ({ value, onChange, row, label }) => {
+const TextAreaField = ({ value, onChange, row, label }) => {
   return (
-    <div className="input-control">
-      <textarea
-        className="textarea is-medium"
-        row={row}
+    <FormControl component="TextAreaField" fullWidth>
+      <TextareaAutosize
+        rowsMin={row}
         value={value}
         onChange={onChange}
+        aria-label={label}
         placeholder={label}
-      ></textarea>
-    </div>
+      />
+    </FormControl>
   );
 };
 
-export default TextArea;
+export default TextAreaField;

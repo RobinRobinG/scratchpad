@@ -1,6 +1,4 @@
 import React, { useState, Fragment } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import Button from './Button';
 import Input from './Input';
 import TextArea from './TextArea';
@@ -9,9 +7,9 @@ import CardContent from './CardContent';
 function renderNoteEntry({ title, body, id }) {
   return (
     <Fragment>
+      <p className="note-id">id: {id}</p>
       <p className="note-title">{title}</p>
       <p className="note-body">{body}</p>
-      <p className="note-id">id: {id}</p>
     </Fragment>
   );
 }
@@ -25,37 +23,41 @@ function renderEditInput({
   handleNoteEditSaveOnClick
 }) {
   return (
-    <Fragment>
-      <p>Edit</p>
+    <div className="field edit-note">
+      <p className="note-id">id: {id}</p>
       <Input value={noteTitle} label="Title" onChange={onUpdateNoteTitle} />
       <TextArea
         placeholder="Note"
         value={noteBody}
         onChange={onUpdateNoteBody}
-        row="5"
+        row="7"
       />
-      <p className="product-id">id: {id}</p>
-      <Button
-        onClick={handleNoteEditSaveOnClick}
-        size="is-small"
-        color="is-info"
-        label="Save"
-      />
-    </Fragment>
+      <div className="buttons is-right input-control">
+        <Button
+          onClick={handleNoteEditSaveOnClick}
+          size="is-small"
+          color="is-info"
+          label="Save"
+        />
+      </div>
+    </div>
   );
 }
 
 function renderEditAndDelete({ handleNoteEditOnClick, handleDeleteNote, id }) {
   return (
-    <Fragment>
-      <a href="/" onClick={handleNoteEditOnClick} className="product-edit-icon">
-        <FontAwesomeIcon icon={faEdit} />
+    <div className="edit-and-delete">
+      <a href="/" onClick={handleNoteEditOnClick} className="edit-icon">
+        Edit
       </a>
-
-      <button onClick={event => handleDeleteNote(id, event)} className="delete">
-        <FontAwesomeIcon icon={faEdit} />
-      </button>
-    </Fragment>
+      <a
+        href="/"
+        onClick={event => handleDeleteNote(id, event)}
+        className="delete-icon"
+      >
+        Delete
+      </a>
+    </div>
   );
 }
 
@@ -88,7 +90,7 @@ const Note = props => {
   const onUpdateNoteBody = event => setNoteBody(event.target.value);
 
   return (
-    <CardContent>
+    <CardContent className="column is-4">
       {isAdmin &&
         renderEditAndDelete({ handleNoteEditOnClick, handleDeleteNote, id })}
       {isEditMode

@@ -22,17 +22,15 @@ const Notes = () => {
 
   return (
     <section className="container">
-      <div className="columns features is-multiline">
+      <div className="features is-multiline">
         {notes && notes.length > 0 ? (
           notes.map(note => (
-            <div className="column is-4">
-              <Note
-                title={note.notetitle}
-                body={note.notebody}
-                id={note.id}
-                key={note.id}
-              />
-            </div>
+            <Note
+              title={note.notetitle}
+              body={note.notebody}
+              id={note.id}
+              key={note.id}
+            />
           ))
         ) : (
           <div className="tile notification is-warning">No notes available</div>

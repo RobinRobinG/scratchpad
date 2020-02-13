@@ -1,17 +1,13 @@
 import React from 'react';
+import { FormControl, InputLabel, Input } from '@material-ui/core';
 
-const Input = ({ value, onChange, label }) => {
+const InputField = ({ value, onChange, label }) => {
   return (
-    <div className="input-control">
-      <input
-        className="input is-medium"
-        type="text"
-        placeholder={label}
-        value={value}
-        onChange={onChange}
-      />
-    </div>
+    <FormControl component="InputField" fullWidth>
+      <InputLabel htmlFor={label}>{label}</InputLabel>
+      <Input id={label} type="text" value={value} onChange={onChange} />
+    </FormControl>
   );
 };
 
-export default Input;
+export default InputField;

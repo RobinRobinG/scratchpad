@@ -4,19 +4,17 @@ import axios from 'axios';
 const config = require('../config.json');
 
 const TakeNote = () => {
-
   const [notes, setNotes] = useState([]);
-
 
   const handleUpdateNote = async (id, title, body) => {
     try {
-      const params = { id, notetitle: title, notebody: body };
+      const params = { id, title, body };
       await axios.patch(`${config.api.invokeUrl}/products/${id}`, params);
 
       const noteToUpdate = [...notes].find(note => note.id === id);
       const updatedNotes = [...notes].filter(note => note.id !== id);
-      noteToUpdate.notetitle = title;
-      noteToUpdate.notebody = body;
+      noteToUpdate.title = title;
+      noteToUpdate.body = body;
       updatedNotes.unshift(noteToUpdate);
       setNotes(updatedNotes);
     } catch (error) {
@@ -60,8 +58,8 @@ const TakeNote = () => {
                 isAdmin={true}
                 handleUpdateNote={handleUpdateNote}
                 handleDeleteNote={handleDeleteNote}
-                title={note.notetitle}
-                body={note.notebody}
+                title={note.title}
+                body={note.body}
                 id={note.id}
                 key={note.id}
               />

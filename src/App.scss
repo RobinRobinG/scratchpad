@@ -2,3 +2,55 @@ body {
   visibility: visible !important;
   font-family: 'Roboto', sans-serif;
 }
+
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  .content {
+    flex: 1;
+  }
+}
+
+.nav-bar .menu-icon {
+  margin-right: 10px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.new-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.textarea {
+  textarea {
+    resize: vertical;
+  }
+}
+
+.note-card {
+  margin: 20px 10px;
+  &.green {
+    border-top: 8px solid green;
+  }
+  &.purple {
+    border-top: 6px solid purple;
+  }
+
+  .action-buttons {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+.footer {
+  background-color: rgb(237, 237, 237);
+  padding: 15px 0;
+  margin-top: 20px;
+}

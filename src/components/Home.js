@@ -1,15 +1,12 @@
-import React, { Fragment } from 'react';
-import Notes from './Notes';
-import CtaHorizontal from './CtaHorizontal';
+import React from 'react';
+import { Container } from '@material-ui/core';
 import NewForm from './NewForm';
 
 function Home() {
   return (
-    <Fragment>
+    <Container maxWidth="sm" className="content">
       <NewForm />
-      <CtaHorizontal />
-      <Notes />
-    </Fragment>
+    </Container>
   );
 }
 

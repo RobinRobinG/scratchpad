@@ -3,7 +3,7 @@ import { FormControl, TextareaAutosize } from '@material-ui/core';
 
 const TextAreaField = ({ value, onChange, row, label }) => {
   return (
-    <FormControl component="TextAreaField" fullWidth>
+    <FormControl fullWidth className="textarea" margin="normal">
       <TextareaAutosize
         rowsMin={row}
         value={value}

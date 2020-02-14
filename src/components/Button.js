@@ -1,15 +1,18 @@
 import React from 'react';
+import { Button } from '@material-ui/core';
 
-const Button = ({ onClick, size, color, label }) => {
+const FormButton = ({ onClick, size, color, label }) => {
   return (
-    <button
+    <Button
+      variant="contained"
+      color={color}
+      size={size}
       type="submit"
-      className={`button ${color} ${size}`}
       onClick={onClick}
     >
       {label}
-    </button>
+    </Button>
   );
 };
 
-export default Button;
+export default FormButton;

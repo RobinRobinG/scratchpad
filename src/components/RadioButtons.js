@@ -8,11 +8,7 @@ import {
 
 const RadioButtonsField = ({ value, onChange, label, options }) => {
   return (
-    <FormControl
-      component="RadioButtonsField"
-      fullWidth
-      className="radio-buttons"
-    >
+    <FormControl fullWidth className="radio-buttons" margin="dense">
       <RadioGroup
         aria-label={label}
         name={label}
@@ -20,10 +16,11 @@ const RadioButtonsField = ({ value, onChange, label, options }) => {
         onChange={onChange}
         row
       >
-        {options.map(option => (
+        {options.map((option, index) => (
           <FormControlLabel
+            key={index}
             value={option}
-            control={<Radio className={option} />}
+            control={<Radio color="primary" />}
             label={option}
           />
         ))}

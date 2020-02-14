@@ -4,12 +4,14 @@ import Input from './Input';
 import TextArea from './TextArea';
 import CardContent from './CardContent';
 
-function renderNoteEntry({ title, body, id }) {
+function renderNoteEntry({ title, body, id, color, created }) {
   return (
     <Fragment>
-      <p className="note-id">id: {id}</p>
-      <p className="note-title">{title}</p>
-      <p className="note-body">{body}</p>
+      <p className="note-id">Id: {id}</p>
+      <p className="note-id">Color: {color}</p>
+      <p className="note-created">Created: {created}</p>
+      <p className="note-title">Title: {title}</p>
+      <p className="note-body">Body: {body}</p>
     </Fragment>
   );
 }
@@ -61,15 +63,8 @@ function renderEditAndDelete({ handleNoteEditOnClick, handleDeleteNote, id }) {
   );
 }
 
-const Note = props => {
-  const {
-    title,
-    body,
-    id,
-    isAdmin,
-    handleUpdateNote,
-    handleDeleteNote
-  } = props;
+const Note = ({ note, isAdmin, handleUpdateNote, handleDeleteNote }) => {
+  const { title, body, id, color, created } = note;
 
   const [isEditMode, setIsEditMode] = useState(false);
   const [noteTitle, setNoteTitle] = useState(title);
@@ -102,7 +97,7 @@ const Note = props => {
             id,
             handleNoteEditSaveOnClick
           })
-        : renderNoteEntry({ body, title, id })}
+        : renderNoteEntry({ body, title, id, color, created })}
     </CardContent>
   );
 };

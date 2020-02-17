@@ -19,7 +19,7 @@ const App = () => {
         <Navbar />
         <Switch>
           <Route exact path="/notes" component={Notes} />
-          <Route path="/edit" component={EditForm} />
+          <Route path="/edit/:id" component={EditForm} />
           <Route exact path="/" component={Home} />
           <Redirect from="*" to="/" />
         </Switch>

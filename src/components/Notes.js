@@ -18,17 +18,16 @@ const Notes = () => {
     }
   };
 
-  const fetchNotes = async () => {
-    try {
-      const res = await axios.get(`${config.api.invokeUrl}/products`);
-      console.log(res);
-      setNotes(res.data);
-    } catch (error) {
-      console.log(`An error has occurred: ${error}`);
-    }
-  };
-
   useEffect(() => {
+    const fetchNotes = async () => {
+      try {
+        const res = await axios.get(`${config.api.invokeUrl}/products`);
+        setNotes(res.data);
+      } catch (error) {
+        console.log(`An error has occurred: ${error}`);
+      }
+    };
+
     fetchNotes();
   }, []);
 

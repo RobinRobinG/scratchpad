@@ -9,6 +9,7 @@ function renderNewButton(pathname, history) {
       <Button
         color="inherit"
         variant="outlined"
+        size="small"
         onClick={() => history.push('/')}
       >
         Add New
@@ -23,6 +24,7 @@ function renderAllButton(pathname, history) {
       <Button
         color="inherit"
         variant="outlined"
+        size="small"
         className="view-all"
         onClick={() => history.push('/notes')}
       >

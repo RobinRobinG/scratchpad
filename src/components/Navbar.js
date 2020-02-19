@@ -1,13 +1,47 @@
 import React from 'react';
+import { useLocation, useHistory } from 'react-router-dom';
 import Logo from './Logo';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
+import { AppBar, Button, Toolbar } from '@material-ui/core';
+
+function renderNewButton(pathname, history) {
+  if (pathname !== '/') {
+    return (
+      <Button
+        color="inherit"
+        variant="outlined"
+        onClick={() => history.push('/')}
+      >
+        Add New
+      </Button>
+    );
+  }
+}
+
+function renderAllButton(pathname, history) {
+  if (pathname !== '/notes') {
+    return (
+      <Button
+        color="inherit"
+        variant="outlined"
+        className="view-all"
+        onClick={() => history.push('/notes')}
+      >
+        View All
+      </Button>
+    );
+  }
+}
 
 function Navbar() {
+  const { pathname } = useLocation();
+  const history = useHistory();
+
   return (
     <AppBar position="sticky" className="nav-bar">
       <Toolbar variant="dense">
         <Logo />
+        {renderNewButton(pathname, history)}
+        {renderAllButton(pathname, history)}
       </Toolbar>
     </AppBar>
   );

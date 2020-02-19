@@ -3,10 +3,6 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
-.tags {
-  width: 100%;
-}
-
 .App {
   display: flex;
   flex-direction: column;
@@ -17,13 +13,19 @@ body {
   }
 }
 
-.nav-bar .menu-icon {
-  margin-right: 10px;
-}
+.nav-bar {
+  .menu-icon {
+    margin-right: 10px;
+  }
 
-.logo {
-  display: flex;
-  align-items: center;
+  .logo {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+  }
+  .view-all {
+    margin-left: 10px;
+  }
 }
 
 .new-form {
@@ -62,6 +64,7 @@ body {
   justify-content: center;
   margin-top: 20px;
 }
+
 .edit-form {
   .button-group {
     display: flex;

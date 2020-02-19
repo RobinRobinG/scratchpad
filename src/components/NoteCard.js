@@ -7,22 +7,38 @@ import {
   CardContent,
   CardActions,
   IconButton,
-  Typography
+  Typography,
+  Chip
 } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { format } from 'date-fns';
 
-function getDate(createdDate) {
-  if (!createdDate) {
+function getSubheader(created, label) {
+  if (!created) {
     return null;
   }
-  return format(new Date(createdDate), 'MMMM dd, yyyy h:mm aaaa');
+  const date = format(new Date(created), 'MMMM dd, yyyy h:mm aaaa');
+  return (
+    <div className="sub-header">
+      <div>{date}</div>
+      {label.map((value, index) => (
+        <Chip
+          key={index}
+          label={value}
+          className="chip"
+          variant="outlined"
+          size="small"
+          color={value.toLowerCase() === 'work' ? 'primary' : 'secondary'}
+        />
+      ))}
+    </div>
+  );
 }
 
 function NoteCard({ note, handleDeleteNote }) {
   let history = useHistory();
-  const { title, body, id, color, created } = note;
+  const { title, body, id, label, created } = note;
 
   const handleNoteEditOnClick = (id, event) => {
     event.preventDefault();
@@ -30,8 +46,8 @@ function NoteCard({ note, handleDeleteNote }) {
   };
 
   return (
-    <Card className={`note-card ${color}`}>
-      <CardHeader title={title} subheader={getDate(created)} />
+    <Card className={`note-card ${label}`}>
+      <CardHeader title={title} subheader={getSubheader(created, label)} />
       <Divider />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">

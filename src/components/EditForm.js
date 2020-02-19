@@ -4,7 +4,7 @@ import { Button, Container } from '@material-ui/core';
 import axios from 'axios';
 import Input from './Input';
 import TextArea from './TextArea';
-import Dropdown from './Dropdown';
+import Tags from './Tags';
 const config = require('../config.json');
 
 function isEmpty(obj) {
@@ -18,7 +18,7 @@ const EditForm = () => {
     id,
     title: '',
     body: '',
-    color: '',
+    label: [],
     created: ''
   });
 
@@ -43,19 +43,21 @@ const EditForm = () => {
   const onEditNoteBodyChange = event =>
     setNote({ ...note, body: event.target.value });
 
-  const onEditNoteColorChange = event =>
-    setNote({ ...note, color: event.target.value });
+  const onEditNoteLabelChange = event =>
+    setNote({ ...note, label: event.target.value });
 
   const handleEditNoteOnSubmit = async (id, event) => {
     event.preventDefault();
 
+    const today = new Date();
+    const created = today.getTime();
     try {
       const params = {
         id,
         body: note.body,
-        color: note.color,
+        label: note.label,
         title: note.title,
-        created: new Date().toString()
+        created
       };
       await axios.patch(`${config.api.invokeUrl}/products/${id}`, params);
 
@@ -76,7 +78,7 @@ const EditForm = () => {
     }
   };
 
-  const colorOptions = ['green', 'purple'];
+  const labelOptions = ['Work', 'Personal'];
 
   return (
     <Container maxWidth="sm" className="content">
@@ -90,34 +92,37 @@ const EditForm = () => {
             value={note.title}
             onChange={onEditNoteTitleChange}
           />
-          <Dropdown
-            label="color"
-            value={note.color}
-            onChange={onEditNoteColorChange}
-            options={colorOptions}
+          <Tags
+            label="Label"
+            value={note.label}
+            onChange={onEditNoteLabelChange}
+            options={labelOptions}
           />
           <TextArea
-            row="10"
+            row="15"
             label="Note"
             value={note.body}
             onChange={onEditNoteBodyChange}
           />
-          <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            type="submit"
-          >
-            Save
-          </Button>
-          <Button
-            variant="contained"
-            color="secondary"
-            size="large"
-            onClick={event => handleDeleteNote(id, event)}
-          >
-            Delete
-          </Button>
+          <div className="button-group">
+            <Button
+              variant="contained"
+              color="primary"
+              size="large"
+              type="submit"
+              className="submit-button"
+            >
+              Save
+            </Button>
+            <Button
+              variant="outlined"
+              color="secondary"
+              size="large"
+              onClick={event => handleDeleteNote(id, event)}
+            >
+              Delete
+            </Button>
+          </div>
         </form>
       )}
     </Container>

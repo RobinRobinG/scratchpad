@@ -5,18 +5,20 @@ import axios from 'axios';
 import uuidv4 from 'uuid/v4';
 import Input from './Input';
 import TextArea from './TextArea';
-import Dropdown from './Dropdown';
+import Tags from './Tags';
 const config = require('../config.json');
 
 const NewForm = () => {
   let history = useHistory();
+  const today = new Date();
+  const created = today.getTime();
 
   const initialState = {
     title: '',
     body: '',
     id: uuidv4(),
-    created: new Date().toString(),
-    color: 'green'
+    created,
+    label: []
   };
   const [newEntry, setNewEntry] = useState(initialState);
 
@@ -28,7 +30,7 @@ const NewForm = () => {
         title: newEntry.title,
         body: newEntry.body,
         created: newEntry.created,
-        color: newEntry.color
+        label: newEntry.label
       };
       await axios.post(`${config.api.invokeUrl}/products/${id}`, params);
       setNewEntry(initialState);
@@ -41,13 +43,14 @@ const NewForm = () => {
   const onAddNoteTitleChange = event =>
     setNewEntry({ ...newEntry, title: event.target.value });
 
-  const onSelectNoteColorChange = event =>
-    setNewEntry({ ...newEntry, color: event.target.value });
+  const onSelectNoteLabelChange = event => {
+    setNewEntry({ ...newEntry, label: event.target.value });
+  };
 
   const onAddNoteBodyChange = event =>
     setNewEntry({ ...newEntry, body: event.target.value });
 
-  const colorOptions = ['green', 'purple'];
+  const labelOptions = ['Work', 'Personal'];
 
   return (
     <form
@@ -59,14 +62,14 @@ const NewForm = () => {
         value={newEntry.title}
         onChange={onAddNoteTitleChange}
       />
-      <Dropdown
-        label="color"
-        value={newEntry.color}
-        onChange={onSelectNoteColorChange}
-        options={colorOptions}
+      <Tags
+        label="Label"
+        value={newEntry.label}
+        onChange={onSelectNoteLabelChange}
+        options={labelOptions}
       />
       <TextArea
-        row="10"
+        row="15"
         label="Note"
         value={newEntry.body}
         onChange={onAddNoteBodyChange}

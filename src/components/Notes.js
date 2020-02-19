@@ -4,6 +4,10 @@ import NoteCard from './NoteCard';
 import axios from 'axios';
 const config = require('../config.json');
 
+function sortByDate(notes) {
+  return notes.sort((a, b) => b.created - a.created);
+}
+
 const Notes = () => {
   const [notes, setNotes] = useState([]);
 
@@ -12,7 +16,8 @@ const Notes = () => {
     try {
       await axios.delete(`${config.api.invokeUrl}/products/${id}`);
       const updatedNotes = [...notes].filter(note => note.id !== id);
-      setNotes(updatedNotes);
+      const sortedNotes = sortByDate(updatedNotes);
+      setNotes(sortedNotes);
     } catch (error) {
       console.log(`An error has occurred: ${error}`);
     }
@@ -22,7 +27,8 @@ const Notes = () => {
     const fetchNotes = async () => {
       try {
         const res = await axios.get(`${config.api.invokeUrl}/products`);
-        setNotes(res.data);
+        const sortedNotes = sortByDate(res.data);
+        setNotes(sortedNotes);
       } catch (error) {
         console.log(`An error has occurred: ${error}`);
       }
@@ -42,7 +48,7 @@ const Notes = () => {
           />
         ))
       ) : (
-        <div className="tile notification is-warning">No notes available</div>
+        <div className="tile loading">Loading...</div>
       )}
     </Container>
   );

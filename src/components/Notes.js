@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container } from '@material-ui/core';
 import NoteCard from './NoteCard';
+import Chips from './Chips';
 import axios from 'axios';
 const config = require('../config.json');
 
@@ -10,6 +11,17 @@ function sortByDate(notes) {
 
 const Notes = () => {
   const [notes, setNotes] = useState([]);
+  const [filteredNotes, setFilteredNotes] = useState(notes);
+
+  const chipsOnClick = (event, tag) => {
+    event.preventDefault();
+
+    if (tag === 'All') {
+      setFilteredNotes(notes);
+    } else {
+      setFilteredNotes([...notes].filter(note => note.label.includes(tag)));
+    }
+  };
 
   const handleDeleteNote = async (id, event) => {
     event.preventDefault();
@@ -18,6 +30,7 @@ const Notes = () => {
       const updatedNotes = [...notes].filter(note => note.id !== id);
       const sortedNotes = sortByDate(updatedNotes);
       setNotes(sortedNotes);
+      setFilteredNotes(notes);
     } catch (error) {
       console.log(`An error has occurred: ${error}`);
     }
@@ -29,6 +42,7 @@ const Notes = () => {
         const res = await axios.get(`${config.api.invokeUrl}/products`);
         const sortedNotes = sortByDate(res.data);
         setNotes(sortedNotes);
+        setFilteredNotes(notes);
       } catch (error) {
         console.log(`An error has occurred: ${error}`);
       }
@@ -37,10 +51,13 @@ const Notes = () => {
     fetchNotes();
   }, []);
 
+  const tags = ['All', 'Work', 'Personal'];
+
   return (
     <Container maxWidth="sm" className="content">
-      {notes && notes.length > 0 ? (
-        notes.map(note => (
+      <Chips tags={tags} handleClick={chipsOnClick} />
+      {filteredNotes && notes.length > 0 ? (
+        filteredNotes.map(note => (
           <NoteCard
             note={note}
             key={note.id}

@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from 'react';
-import Button from './Button';
-import Input from './Input';
-import TextArea from './TextArea';
+import Button from '../Button';
+import Input from '../Input';
+import TextArea from '../TextArea';
 import CardContent from './CardContent';
 
 function renderNoteEntry({ title, body, id, color, created }) {

@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Button } from '@material-ui/core';
+import { Button, Container } from '@material-ui/core';
 import axios from 'axios';
 import uuidv4 from 'uuid/v4';
 import Input from './Input';
 import TextArea from './TextArea';
 import Tags from './Tags';
+import SaveIcon from '@material-ui/icons/Save';
 const config = require('../config.json');
 
 const NewForm = () => {
@@ -53,31 +54,39 @@ const NewForm = () => {
   const labelOptions = ['Work', 'Personal'];
 
   return (
-    <form
-      onSubmit={event => handleAddNoteOnSubmit(newEntry.id, event)}
-      className="new-form"
-    >
-      <Input
-        label="Title"
-        value={newEntry.title}
-        onChange={onAddNoteTitleChange}
-      />
-      <Tags
-        label="Label"
-        value={newEntry.label}
-        onChange={onSelectNoteLabelChange}
-        options={labelOptions}
-      />
-      <TextArea
-        row="15"
-        label="Note"
-        value={newEntry.body}
-        onChange={onAddNoteBodyChange}
-      />
-      <Button variant="contained" color="primary" size="large" type="submit">
-        Save
-      </Button>
-    </form>
+    <Container maxWidth="sm" className="content">
+      <form
+        onSubmit={event => handleAddNoteOnSubmit(newEntry.id, event)}
+        className="new-form"
+      >
+        <Input
+          label="Title"
+          value={newEntry.title}
+          onChange={onAddNoteTitleChange}
+        />
+        <Tags
+          label="Label"
+          value={newEntry.label}
+          onChange={onSelectNoteLabelChange}
+          options={labelOptions}
+        />
+        <TextArea
+          row="15"
+          label="Note"
+          value={newEntry.body}
+          onChange={onAddNoteBodyChange}
+        />
+        <Button
+          variant="contained"
+          color="primary"
+          size="large"
+          type="submit"
+          startIcon={<SaveIcon />}
+        >
+          Save
+        </Button>
+      </form>
+    </Container>
   );
 };
 

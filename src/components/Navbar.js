@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
-import Logo from './Logo';
 import { AppBar, Button, Toolbar } from '@material-ui/core';
+import Logo from './Logo';
 
 function renderNewButton(pathname, history) {
   if (pathname !== '/') {

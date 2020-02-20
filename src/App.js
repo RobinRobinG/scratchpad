@@ -6,7 +6,7 @@ import {
   Redirect
 } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Home from './components/Home';
+import NewForm from './components/NewForm';
 import Notes from './components/Notes';
 import EditForm from './components/EditForm';
 import Footer from './components/Footer';
@@ -20,7 +20,7 @@ const App = () => {
         <Switch>
           <Route exact path="/notes" component={Notes} />
           <Route path="/edit/:id" component={EditForm} />
-          <Route exact path="/" component={Home} />
+          <Route exact path="/" component={NewForm} />
           <Redirect from="*" to="/" />
         </Switch>
         <Footer />

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import Card from '@material-ui/core/Card';
 import {
+  Card,
   Divider,
   CardHeader,
   CardContent,
@@ -12,13 +12,24 @@ import {
 } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
+import FaceIcon from '@material-ui/icons/Face';
+import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
 import { format } from 'date-fns';
+
+function getIcon(value) {
+  if (value.toLowerCase() === 'work') {
+    return <BusinessCenterIcon />;
+  } else if (value.toLowerCase() === 'personal') {
+    return <FaceIcon />;
+  }
+}
 
 function getSubheader(created, label) {
   if (!created) {
     return null;
   }
   const date = format(new Date(created), 'MMMM dd, yyyy h:mm aaaa');
+
   return (
     <div className="sub-header">
       <div>{date}</div>
@@ -29,6 +40,7 @@ function getSubheader(created, label) {
           className="chip"
           variant="outlined"
           size="small"
+          icon={getIcon(value)}
           color={value.toLowerCase() === 'work' ? 'primary' : 'secondary'}
         />
       ))}
@@ -40,7 +52,7 @@ function NoteCard({ note, handleDeleteNote }) {
   let history = useHistory();
   const { title, body, id, label, created } = note;
 
-  const handleNoteEditOnClick = (id, event) => {
+  const handleNoteEditOnClick = event => {
     event.preventDefault();
     history.push(`/edit/${id}`);
   };
@@ -55,10 +67,7 @@ function NoteCard({ note, handleDeleteNote }) {
         </Typography>
       </CardContent>
       <CardActions className="action-buttons">
-        <IconButton
-          aria-label="edit"
-          onClick={event => handleNoteEditOnClick(id, event)}
-        >
+        <IconButton aria-label="edit" onClick={handleNoteEditOnClick}>
           <EditIcon />
         </IconButton>
         <IconButton

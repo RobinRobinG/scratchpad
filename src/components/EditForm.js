@@ -5,6 +5,8 @@ import axios from 'axios';
 import Input from './Input';
 import TextArea from './TextArea';
 import Tags from './Tags';
+import SaveIcon from '@material-ui/icons/Save';
+import DeleteIcon from '@material-ui/icons/Delete';
 const config = require('../config.json');
 
 function isEmpty(obj) {
@@ -111,6 +113,7 @@ const EditForm = () => {
               size="large"
               type="submit"
               className="submit-button"
+              startIcon={<SaveIcon />}
             >
               Save
             </Button>
@@ -119,6 +122,7 @@ const EditForm = () => {
               color="secondary"
               size="large"
               onClick={event => handleDeleteNote(id, event)}
+              startIcon={<DeleteIcon />}
             >
               Delete
             </Button>

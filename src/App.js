@@ -5,6 +5,7 @@ import {
   Switch,
   Redirect
 } from 'react-router-dom';
+import { Box } from '@material-ui/core';
 import Navbar from './components/Navbar';
 import NewForm from './components/NewForm';
 import Notes from './components/Notes';
@@ -14,7 +15,7 @@ import './App.scss';
 
 const App = () => {
   return (
-    <div className="App">
+    <Box display="flex" flexDirection="column" style={{ minHeight: '100vh' }}>
       <Router>
         <Navbar />
         <Switch>
@@ -25,7 +26,7 @@ const App = () => {
         </Switch>
         <Footer />
       </Router>
-    </div>
+    </Box>
   );
 };
 

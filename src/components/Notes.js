@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container } from '@material-ui/core';
+import Content from './Content';
 import NoteCard from './NoteCard';
 import Chips from './Chips';
 import axios from 'axios';
@@ -54,7 +54,7 @@ const Notes = () => {
   const tags = ['All', 'Work', 'Personal'];
 
   return (
-    <Container maxWidth="sm" className="content">
+    <Content>
       <Chips tags={tags} handleClick={chipsOnClick} />
       {filteredNotes && notes.length > 0 ? (
         filteredNotes.map(note => (
@@ -67,7 +67,7 @@ const Notes = () => {
       ) : (
         <div className="tile loading">Loading...</div>
       )}
-    </Container>
+    </Content>
   );
 };
 

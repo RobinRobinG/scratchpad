@@ -1,6 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
 import {
+  Box,
   Card,
   Divider,
   CardHeader,
@@ -16,6 +18,16 @@ import FaceIcon from '@material-ui/icons/Face';
 import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
 import { format } from 'date-fns';
 
+const useStyles = makeStyles({
+  root: {
+    borderRadius: '1rem',
+    margin: '1rem'
+  },
+  chip: {
+    marginRight: 10
+  }
+});
+
 function getIcon(value) {
   if (value.toLowerCase() === 'work') {
     return <BusinessCenterIcon />;
@@ -24,31 +36,34 @@ function getIcon(value) {
   }
 }
 
-function getSubheader(created, label) {
+function getSubheader(classes, created, label) {
   if (!created) {
     return null;
   }
   const date = format(new Date(created), 'MMMM dd, yyyy h:mm aaaa');
 
   return (
-    <div className="sub-header">
-      <div>{date}</div>
-      {label.map((value, index) => (
-        <Chip
-          key={index}
-          label={value}
-          className="chip"
-          variant="outlined"
-          size="small"
-          icon={getIcon(value)}
-          color={value.toLowerCase() === 'work' ? 'primary' : 'secondary'}
-        />
-      ))}
-    </div>
+    <Box display="flex" flexDirection="row" mt={1}>
+      <Box flexGrow={1}>
+        {label.map((value, index) => (
+          <Chip
+            key={index}
+            label={value}
+            className={classes.chip}
+            variant="outlined"
+            size="small"
+            icon={getIcon(value)}
+            color={value.toLowerCase() === 'work' ? 'primary' : 'secondary'}
+          />
+        ))}
+      </Box>
+      <Typography variant="subtitle1">{date}</Typography>
+    </Box>
   );
 }
 
 function NoteCard({ note, handleDeleteNote }) {
+  const classes = useStyles();
   let history = useHistory();
   const { title, body, id, label, created } = note;
 
@@ -58,15 +73,18 @@ function NoteCard({ note, handleDeleteNote }) {
   };
 
   return (
-    <Card className={`note-card ${label}`}>
-      <CardHeader title={title} subheader={getSubheader(created, label)} />
+    <Card raised className={classes.root}>
+      <CardHeader
+        title={title}
+        subheader={getSubheader(classes, created, label)}
+      />
       <Divider />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
           {body}
         </Typography>
       </CardContent>
-      <CardActions className="action-buttons">
+      <CardActions>
         <IconButton aria-label="edit" onClick={handleNoteEditOnClick}>
           <EditIcon />
         </IconButton>

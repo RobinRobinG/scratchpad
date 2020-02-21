@@ -16,6 +16,15 @@ const theme = createMuiTheme({
     background: {
       default: '#fff'
     }
+  },
+  typography: {
+    subtitle1: {
+      fontSize: 14,
+      fontStyle: 'italic'
+    },
+    body: {
+      fontWeight: 500
+    }
   }
 });
 

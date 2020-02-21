@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Button, Container } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import axios from 'axios';
 import uuidv4 from 'uuid/v4';
+import Content from './Content';
 import Input from './Input';
 import TextArea from './TextArea';
 import Tags from './Tags';
@@ -54,7 +55,7 @@ const NewForm = () => {
   const labelOptions = ['Work', 'Personal'];
 
   return (
-    <Container maxWidth="sm" className="content">
+    <Content>
       <form
         onSubmit={event => handleAddNoteOnSubmit(newEntry.id, event)}
         className="new-form"
@@ -86,7 +87,7 @@ const NewForm = () => {
           Save
         </Button>
       </form>
-    </Container>
+    </Content>
   );
 };
 

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { Button, Container } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import axios from 'axios';
+import Content from './Content';
 import Input from './Input';
 import TextArea from './TextArea';
 import Tags from './Tags';
@@ -83,7 +84,7 @@ const EditForm = () => {
   const labelOptions = ['Work', 'Personal'];
 
   return (
-    <Container maxWidth="sm" className="content">
+    <Content>
       {isEmpty(note) === false && (
         <form
           onSubmit={event => handleEditNoteOnSubmit(note.id, event)}
@@ -129,7 +130,7 @@ const EditForm = () => {
           </div>
         </form>
       )}
-    </Container>
+    </Content>
   );
 };
 

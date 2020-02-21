@@ -12,10 +12,6 @@ function getIcon(value) {
 }
 
 const Chips = ({ tags, handleClick }) => {
-  // const handleClick = (event, tag) => {
-  //   console.log({ tag });
-  // };
-
   return (
     <div className="clickable-chips">
       {tags.map((tag, index) => (

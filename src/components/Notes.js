@@ -11,7 +11,7 @@ function sortByDate(notes) {
 
 const Notes = () => {
   const [notes, setNotes] = useState([]);
-  const [filteredNotes, setFilteredNotes] = useState(notes);
+  const [filteredNotes, setFilteredNotes] = useState([]);
 
   const chipsOnClick = (event, tag) => {
     event.preventDefault();
@@ -30,7 +30,7 @@ const Notes = () => {
       const updatedNotes = [...notes].filter(note => note.id !== id);
       const sortedNotes = sortByDate(updatedNotes);
       setNotes(sortedNotes);
-      setFilteredNotes(notes);
+      setFilteredNotes(sortedNotes);
     } catch (error) {
       console.log(`An error has occurred: ${error}`);
     }
@@ -42,7 +42,7 @@ const Notes = () => {
         const res = await axios.get(`${config.api.invokeUrl}/products`);
         const sortedNotes = sortByDate(res.data);
         setNotes(sortedNotes);
-        setFilteredNotes(notes);
+        setFilteredNotes(sortedNotes);
       } catch (error) {
         console.log(`An error has occurred: ${error}`);
       }

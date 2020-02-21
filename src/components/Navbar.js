@@ -6,13 +6,8 @@ import Logo from './Logo';
 function renderNewButton(pathname, history) {
   if (pathname !== '/') {
     return (
-      <Button
-        color="inherit"
-        variant="outlined"
-        size="small"
-        onClick={() => history.push('/')}
-      >
-        Add New
+      <Button color="inherit" onClick={() => history.push('/')}>
+        Add new
       </Button>
     );
   }
@@ -23,12 +18,10 @@ function renderAllButton(pathname, history) {
     return (
       <Button
         color="inherit"
-        variant="outlined"
-        size="small"
         className="view-all"
         onClick={() => history.push('/notes')}
       >
-        View All
+        View all
       </Button>
     );
   }

@@ -25,6 +25,9 @@ const useStyles = makeStyles({
   },
   chip: {
     marginRight: 10
+  },
+  grow: {
+    flexGrow: 1
   }
 });
 
@@ -36,11 +39,10 @@ function getIcon(value) {
   }
 }
 
-function getSubheader(classes, created, label) {
-  if (!created) {
+function getSubheader(classes, label) {
+  if (!label) {
     return null;
   }
-  const date = format(new Date(created), 'MMMM dd, yyyy h:mm aaaa');
 
   return (
     <Box display="flex" flexDirection="row" mt={1}>
@@ -57,7 +59,6 @@ function getSubheader(classes, created, label) {
           />
         ))}
       </Box>
-      <Typography variant="subtitle1">{date}</Typography>
     </Box>
   );
 }
@@ -66,6 +67,7 @@ function NoteCard({ note, handleDeleteNote }) {
   const classes = useStyles();
   let history = useHistory();
   const { title, body, id, label, created } = note;
+  const date = format(new Date(created), 'MMMM dd, yyyy h:mm aaaa');
 
   const handleNoteEditOnClick = event => {
     event.preventDefault();
@@ -74,27 +76,33 @@ function NoteCard({ note, handleDeleteNote }) {
 
   return (
     <Card raised className={classes.root}>
-      <CardHeader
-        title={title}
-        subheader={getSubheader(classes, created, label)}
-      />
+      <CardHeader title={title} subheader={getSubheader(classes, label)} />
       <Divider />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
           {body}
         </Typography>
       </CardContent>
-      <CardActions>
-        <IconButton aria-label="edit" onClick={handleNoteEditOnClick}>
-          <EditIcon />
-        </IconButton>
-        <IconButton
-          aria-label="delete"
-          onClick={event => handleDeleteNote(id, event)}
-        >
-          <DeleteIcon />
-        </IconButton>
-      </CardActions>
+      <Box className={classes.grow} mx={1}>
+        <CardActions>
+          <Typography
+            variant="subtitle1"
+            color="textSecondary"
+            className={classes.grow}
+          >
+            {date}
+          </Typography>
+          <IconButton aria-label="edit" onClick={handleNoteEditOnClick}>
+            <EditIcon />
+          </IconButton>
+          <IconButton
+            aria-label="delete"
+            onClick={event => handleDeleteNote(id, event)}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </CardActions>
+      </Box>
     </Card>
   );
 }

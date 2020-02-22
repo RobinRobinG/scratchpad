@@ -1,6 +1,5 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-
 import { useLocation, useHistory } from 'react-router-dom';
 import { AppBar, Button, Toolbar, Typography } from '@material-ui/core';
 
@@ -45,10 +44,7 @@ function Navbar() {
       <AppBar position="sticky" color="default">
         <Toolbar variant="dense">
           <Typography variant="h6" color="primary" className={classes.grow}>
-            <Typography variant="span" role="img" aria-label="notepad">
-              🗒
-            </Typography>
-            Notes
+            🗒 Notes
           </Typography>
           {renderNewButton(pathname, history)}
           {renderAllButton(pathname, history)}

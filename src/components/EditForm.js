@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { Button } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { Box, Button } from '@material-ui/core';
 import axios from 'axios';
 import Content from './Content';
 import Input from './Input';
@@ -10,11 +11,20 @@ import SaveIcon from '@material-ui/icons/Save';
 import DeleteIcon from '@material-ui/icons/Delete';
 const config = require('../config.json');
 
+const useStyles = makeStyles(theme => ({
+  root: {
+    '& > *': {
+      marginLeft: theme.spacing(1)
+    }
+  }
+}));
+
 function isEmpty(obj) {
   return Object.keys(obj).length === 0;
 }
 
 const EditForm = () => {
+  const classes = useStyles();
   let history = useHistory();
   let { id } = useParams();
   const [note, setNote] = useState({
@@ -86,48 +96,46 @@ const EditForm = () => {
   return (
     <Content>
       {isEmpty(note) === false && (
-        <form
-          onSubmit={event => handleEditNoteOnSubmit(note.id, event)}
-          className="edit-form"
-        >
-          <Input
-            label="Title"
-            value={note.title}
-            onChange={onEditNoteTitleChange}
-          />
-          <Tags
-            label="Label"
-            value={note.label}
-            onChange={onEditNoteLabelChange}
-            options={labelOptions}
-          />
-          <TextArea
-            row="15"
-            label="Note"
-            value={note.body}
-            onChange={onEditNoteBodyChange}
-          />
-          <div className="button-group">
-            <Button
-              variant="contained"
-              color="primary"
-              size="large"
-              type="submit"
-              className="submit-button"
-              startIcon={<SaveIcon />}
-            >
-              Save
-            </Button>
-            <Button
-              variant="outlined"
-              color="secondary"
-              size="large"
-              onClick={event => handleDeleteNote(id, event)}
-              startIcon={<DeleteIcon />}
-            >
-              Delete
-            </Button>
-          </div>
+        <form onSubmit={event => handleEditNoteOnSubmit(note.id, event)}>
+          <Box display="flex" flexDirection="column" alignItems="flex-end">
+            <Input
+              label="Title"
+              value={note.title}
+              onChange={onEditNoteTitleChange}
+            />
+            <Tags
+              label="Label"
+              value={note.label}
+              onChange={onEditNoteLabelChange}
+              options={labelOptions}
+            />
+            <TextArea
+              row="15"
+              label="Note"
+              value={note.body}
+              onChange={onEditNoteBodyChange}
+            />
+            <Box className={classes.root}>
+              <Button
+                variant="contained"
+                color="primary"
+                size="large"
+                type="submit"
+                startIcon={<SaveIcon />}
+              >
+                Save
+              </Button>
+              <Button
+                variant="outlined"
+                color="secondary"
+                size="large"
+                onClick={event => handleDeleteNote(id, event)}
+                startIcon={<DeleteIcon />}
+              >
+                Delete
+              </Button>
+            </Box>
+          </Box>
         </form>
       )}
     </Content>

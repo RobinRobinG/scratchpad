@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Button } from '@material-ui/core';
+import { Box, Button } from '@material-ui/core';
 import axios from 'axios';
 import uuidv4 from 'uuid/v4';
 import Content from './Content';
@@ -56,36 +56,35 @@ const NewForm = () => {
 
   return (
     <Content>
-      <form
-        onSubmit={event => handleAddNoteOnSubmit(newEntry.id, event)}
-        className="new-form"
-      >
-        <Input
-          label="Title"
-          value={newEntry.title}
-          onChange={onAddNoteTitleChange}
-        />
-        <Tags
-          label="Label"
-          value={newEntry.label}
-          onChange={onSelectNoteLabelChange}
-          options={labelOptions}
-        />
-        <TextArea
-          row="15"
-          label="Note"
-          value={newEntry.body}
-          onChange={onAddNoteBodyChange}
-        />
-        <Button
-          variant="contained"
-          color="primary"
-          size="large"
-          type="submit"
-          startIcon={<SaveIcon />}
-        >
-          Save
-        </Button>
+      <form onSubmit={event => handleAddNoteOnSubmit(newEntry.id, event)}>
+        <Box display="flex" flexDirection="column" alignItems="flex-end">
+          <Input
+            label="Title"
+            value={newEntry.title}
+            onChange={onAddNoteTitleChange}
+          />
+          <Tags
+            label="Label"
+            value={newEntry.label}
+            onChange={onSelectNoteLabelChange}
+            options={labelOptions}
+          />
+          <TextArea
+            row="15"
+            label="Note"
+            value={newEntry.body}
+            onChange={onAddNoteBodyChange}
+          />
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            type="submit"
+            startIcon={<SaveIcon />}
+          >
+            Save
+          </Button>
+        </Box>
       </form>
     </Content>
   );

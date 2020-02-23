@@ -21,7 +21,7 @@ import { format } from 'date-fns';
 const useStyles = makeStyles({
   root: {
     borderRadius: '1rem',
-    margin: '1rem'
+    margin: '1rem 0'
   },
   chip: {
     marginRight: 10

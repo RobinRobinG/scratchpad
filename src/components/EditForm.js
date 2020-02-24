@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import { useHistory, useParams } from 'react-router-dom';
 import { Box, Button } from '@material-ui/core';
 import axios from 'axios';
@@ -10,11 +11,20 @@ import SaveIcon from '@material-ui/icons/Save';
 import DeleteIcon from '@material-ui/icons/Delete';
 const config = require('../config.json');
 
+const useStyles = makeStyles(theme => ({
+  root: {
+    '& > *': {
+      marginLeft: theme.spacing(1)
+    }
+  }
+}));
+
 function isEmpty(obj) {
   return Object.keys(obj).length === 0;
 }
 
 const EditForm = () => {
+  const classes = useStyles();
   let history = useHistory();
   let { id } = useParams();
   const [note, setNote] = useState({
@@ -105,7 +115,7 @@ const EditForm = () => {
               value={note.body}
               onChange={onEditNoteBodyChange}
             />
-            <Box>
+            <Box className={classes.root}>
               <Button
                 variant="contained"
                 color="primary"

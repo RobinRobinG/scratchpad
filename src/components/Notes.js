@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Content from './Content';
 import NoteCard from './NoteCard';
 import Chips from './Chips';
+import LoadingSpinner from './LoadingSpinner';
 import axios from 'axios';
 const config = require('../config.json');
 
@@ -12,6 +13,7 @@ function sortByDate(notes) {
 const Notes = () => {
   const [notes, setNotes] = useState([]);
   const [filteredNotes, setFilteredNotes] = useState([]);
+  const [open, setOpen] = React.useState(true);
 
   const chipsOnClick = (event, tag) => {
     event.preventDefault();
@@ -43,6 +45,7 @@ const Notes = () => {
         const sortedNotes = sortByDate(res.data);
         setNotes(sortedNotes);
         setFilteredNotes(sortedNotes);
+        setOpen(false);
       } catch (error) {
         console.log(`An error has occurred: ${error}`);
       }
@@ -65,7 +68,7 @@ const Notes = () => {
           />
         ))
       ) : (
-        <div className="tile loading">Loading...</div>
+        <LoadingSpinner open={open} />
       )}
     </Content>
   );

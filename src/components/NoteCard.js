@@ -24,12 +24,20 @@ const useStyles = makeStyles({
     margin: '1rem 0'
   },
   chip: {
-    marginRight: 10
+    marginRight: '0.5rem'
   },
   grow: {
     flexGrow: 1
   }
 });
+
+function getColor(value) {
+  if (value.toLowerCase() === 'work') {
+    return 'primary';
+  } else if (value.toLowerCase() === 'personal') {
+    return 'secondary';
+  } 
+}
 
 function getIcon(value) {
   if (value.toLowerCase() === 'work') {
@@ -55,7 +63,7 @@ function getSubheader(classes, label) {
             variant="outlined"
             size="small"
             icon={getIcon(value)}
-            color={value.toLowerCase() === 'work' ? 'primary' : 'secondary'}
+            color={getColor(value)}
           />
         ))}
       </Box>

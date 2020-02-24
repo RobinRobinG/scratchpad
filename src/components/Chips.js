@@ -1,7 +1,26 @@
 import React from 'react';
-import { Chip } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { Chip, Box } from '@material-ui/core';
 import FaceIcon from '@material-ui/icons/Face';
 import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    '& > *': {
+      marginRight: theme.spacing(1)
+    }
+  }
+}));
+
+function getColor(value) {
+  if (value.toLowerCase() === 'work') {
+    return 'primary';
+  } else if (value.toLowerCase() === 'personal') {
+    return 'secondary';
+  } else {
+    return 'default';
+  }
+}
 
 function getIcon(value) {
   if (value.toLowerCase() === 'work') {
@@ -12,21 +31,22 @@ function getIcon(value) {
 }
 
 const Chips = ({ tags, handleClick }) => {
+  const classes = useStyles();
+
   return (
-    <div className="clickable-chips">
+    <Box className={classes.root} display="flex" justifyContent="center" mt={2}>
       {tags.map((tag, index) => (
         <Chip
           key={index}
           label={tag}
-          className="chip"
           variant="outlined"
           clickable
           onClick={event => handleClick(event, tag)}
           icon={getIcon(tag)}
-          color={tag.toLowerCase() === 'work' ? 'primary' : 'secondary'}
+          color={getColor(tag)}
         />
       ))}
-    </div>
+    </Box>
   );
 };
 

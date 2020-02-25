@@ -10,6 +10,30 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+function renderRegisterButton(pathname, history) {
+  if (pathname !== '/register') {
+    return (
+      <Button
+        color="primary"
+        size="small"
+        onClick={() => history.push('/register')}
+      >
+        Register
+      </Button>
+    );
+  }
+}
+
+function renderLoginButton(pathname, history) {
+  if (pathname !== '/') {
+    return (
+      <Button color="primary" size="small" onClick={() => history.push('/')}>
+        Login
+      </Button>
+    );
+  }
+}
+
 function renderNewButton(pathname, history) {
   if (pathname !== '/new') {
     return (
@@ -75,6 +99,8 @@ function Navbar({ auth }) {
           <Typography variant="h6" color="primary" className={classes.grow}>
             🗒 Notes
           </Typography>
+          {!isAuthenticated && renderLoginButton(pathname, history)}
+          {!isAuthenticated && renderRegisterButton(pathname, history)}
           {isAuthenticated && user && renderNewButton(pathname, history)}
           {isAuthenticated && user && renderAllButton(pathname, history)}
           {isAuthenticated &&

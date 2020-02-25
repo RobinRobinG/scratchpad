@@ -54,7 +54,7 @@ function getSubheader(classes, label) {
   }
 
   return (
-    <Box display="flex" flexDirection="row" mt={2}>
+    <Box display="flex" flexDirection="row" mt={1}>
       {label.map((value, index) => (
         <Chip
           key={index}

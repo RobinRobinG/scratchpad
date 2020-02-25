@@ -26,6 +26,8 @@ const NewForm = ({ auth }) => {
 
   const handleAddNoteOnSubmit = async (id, event) => {
     event.preventDefault();
+    const username = user ? user.username : null;
+
     try {
       const params = {
         id,
@@ -33,7 +35,7 @@ const NewForm = ({ auth }) => {
         body: newEntry.body,
         label: newEntry.label,
         created,
-        username: user.username
+        username
       };
       await axios.post(`${config.api.invokeUrl}/products/${id}`, params);
       setNewEntry(initialState);

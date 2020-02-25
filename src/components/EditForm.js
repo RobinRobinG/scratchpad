@@ -65,6 +65,8 @@ const EditForm = ({ auth }) => {
 
     const today = new Date();
     const created = today.getTime();
+    const username = user ? user.username : null;
+    
     try {
       const params = {
         id,
@@ -72,7 +74,7 @@ const EditForm = ({ auth }) => {
         body: note.body,
         label: note.label,
         title: note.title,
-        username: user.username
+        username
       };
       await axios.patch(`${config.api.invokeUrl}/products/${id}`, params);
 

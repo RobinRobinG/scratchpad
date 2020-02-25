@@ -71,10 +71,10 @@ function getSubheader(classes, label) {
   );
 }
 
-function NoteCard({ note, handleDeleteNote }) {
+function NoteCard({ note, handleDeleteNote, user }) {
   const classes = useStyles();
   let history = useHistory();
-  const { title, body, id, label, created } = note;
+  const { title, body, id, label, created, username } = note;
   const date = format(new Date(created), 'MMMM dd, yyyy h:mm aaaa');
 
   const handleNoteEditOnClick = event => {
@@ -91,6 +91,7 @@ function NoteCard({ note, handleDeleteNote }) {
           {body}
         </Typography>
       </CardContent>
+
       <Box className={classes.grow} mx={1}>
         <CardActions>
           <Typography

@@ -10,10 +10,11 @@ function sortByDate(notes) {
   return notes.sort((a, b) => b.created - a.created);
 }
 
-const Notes = () => {
+const Notes = ({ auth }) => {
   const [notes, setNotes] = useState([]);
   const [filteredNotes, setFilteredNotes] = useState([]);
   const [open, setOpen] = React.useState(true);
+  const { user } = auth;
 
   const chipsOnClick = (event, tag) => {
     event.preventDefault();
@@ -65,6 +66,7 @@ const Notes = () => {
             note={note}
             key={note.id}
             handleDeleteNote={handleDeleteNote}
+            user={user}
           />
         ))
       ) : (

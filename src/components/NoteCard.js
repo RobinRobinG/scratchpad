@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Box,
+  Avatar,
   Card,
   Divider,
   CardHeader,
@@ -53,20 +54,18 @@ function getSubheader(classes, label) {
   }
 
   return (
-    <Box display="flex" flexDirection="row" mt={1}>
-      <Box flexGrow={1}>
-        {label.map((value, index) => (
-          <Chip
-            key={index}
-            label={value}
-            className={classes.chip}
-            variant="outlined"
-            size="small"
-            icon={getIcon(value)}
-            color={getColor(value)}
-          />
-        ))}
-      </Box>
+    <Box display="flex" flexDirection="row" mt={2}>
+      {label.map((value, index) => (
+        <Chip
+          key={index}
+          label={value}
+          className={classes.chip}
+          variant="outlined"
+          size="small"
+          icon={getIcon(value)}
+          color={getColor(value)}
+        />
+      ))}
     </Box>
   );
 }
@@ -82,9 +81,21 @@ function NoteCard({ note, handleDeleteNote, user }) {
     history.push(`/edit/${id}`);
   };
 
+  const displayName = username ? username : 'Anonymous';
+  const avatarLabel = displayName.charAt(0).toUpperCase();
+
   return (
     <Card raised className={classes.root}>
-      <CardHeader title={title} subheader={getSubheader(classes, label)} />
+      <CardHeader
+        avatar={
+          <Avatar aria-label="recipe" className={classes.avatar}>
+            {avatarLabel}
+          </Avatar>
+        }
+        action={getSubheader(classes, label)}
+        title={title}
+        subheader={displayName}
+      />
       <Divider />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">

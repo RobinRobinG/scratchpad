@@ -19,7 +19,7 @@ import FaceIcon from '@material-ui/icons/Face';
 import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
 import { format } from 'date-fns';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   root: {
     borderRadius: '1rem',
     margin: '1rem 0'
@@ -29,8 +29,12 @@ const useStyles = makeStyles({
   },
   grow: {
     flexGrow: 1
+  },
+  avatar: {
+    color: '#fff',
+    backgroundColor: theme.palette.info.main
   }
-});
+}));
 
 function getColor(value) {
   if (value.toLowerCase() === 'work') {

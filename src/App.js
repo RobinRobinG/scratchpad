@@ -75,6 +75,11 @@ const App = () => {
             />
             <Route
               exact
+              path="/welcome"
+              render={props => <Welcome {...props} auth={authProps} />}
+            />
+            <Route
+              exact
               path="/forgotpassword"
               render={props => <ForgotPassword {...props} auth={authProps} />}
             />
@@ -84,11 +89,6 @@ const App = () => {
               render={props => (
                 <ChangePasswordConfirmation {...props} auth={authProps} />
               )}
-            />
-            <Route
-              exact
-              path="/welcome"
-              render={props => <Welcome {...props} auth={authProps} />}
             />
             <Route
               exact

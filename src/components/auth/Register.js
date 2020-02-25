@@ -45,7 +45,7 @@ const Register = () => {
         }
       });
       console.log({ signUpResponse });
-      history.push('/new');
+      history.push('/welcome');
     } catch (error) {
       let err = null;
       !error.message ? (err = { message: error }) : (err = error);

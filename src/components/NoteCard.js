@@ -36,7 +36,7 @@ function getColor(value) {
     return 'primary';
   } else if (value.toLowerCase() === 'personal') {
     return 'secondary';
-  } 
+  }
 }
 
 function getIcon(value) {

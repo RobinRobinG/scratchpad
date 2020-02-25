@@ -2,6 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useLocation, useHistory } from 'react-router-dom';
 import { AppBar, Button, Toolbar, Typography } from '@material-ui/core';
+import { Auth } from 'aws-amplify';
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -10,9 +11,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function renderNewButton(pathname, history) {
-  if (pathname !== '/') {
+  if (pathname !== '/new') {
     return (
-      <Button color="primary" size="small" onClick={() => history.push('/')}>
+      <Button color="primary" size="small" onClick={() => history.push('/new')}>
         Add new
       </Button>
     );
@@ -25,7 +26,6 @@ function renderAllButton(pathname, history) {
       <Button
         color="primary"
         size="small"
-        className="view-all"
         onClick={() => history.push('/notes')}
       >
         View all
@@ -34,10 +34,38 @@ function renderAllButton(pathname, history) {
   }
 }
 
-function Navbar() {
+async function handleLogOut({ event, setIsAuthenticated, setUser, history }) {
+  event.preventDefault();
+  try {
+    await Auth.signOut();
+    setIsAuthenticated(false);
+    setUser(null);
+    history.push('/');
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+function renderLogOutButton({ history, setIsAuthenticated, setUser }) {
+  return (
+    <Button
+      color="default"
+      size="small"
+      onClick={event =>
+        handleLogOut({ event, setIsAuthenticated, setUser, history })
+      }
+    >
+      Log out
+    </Button>
+  );
+}
+
+function Navbar({ auth }) {
   const classes = useStyles();
   const { pathname } = useLocation();
   const history = useHistory();
+
+  const { isAuthenticated, user, setIsAuthenticated, setUser } = auth;
 
   return (
     <div className={classes.grow}>
@@ -46,8 +74,11 @@ function Navbar() {
           <Typography variant="h6" color="primary" className={classes.grow}>
             🗒 Notes
           </Typography>
-          {renderNewButton(pathname, history)}
-          {renderAllButton(pathname, history)}
+          {isAuthenticated && user && renderNewButton(pathname, history)}
+          {isAuthenticated && user && renderAllButton(pathname, history)}
+          {isAuthenticated &&
+            user &&
+            renderLogOutButton({ history, setIsAuthenticated, setUser })}
         </Toolbar>
       </AppBar>
     </div>

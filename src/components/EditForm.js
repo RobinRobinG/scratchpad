@@ -23,16 +23,19 @@ function isEmpty(obj) {
   return Object.keys(obj).length === 0;
 }
 
-const EditForm = () => {
+const EditForm = ({ auth }) => {
   const classes = useStyles();
   let history = useHistory();
   let { id } = useParams();
+  const { user } = auth;
+
   const [note, setNote] = useState({
     id,
     title: '',
     body: '',
     label: [],
-    created: ''
+    created: '',
+    username: user.username
   });
 
   useEffect(() => {
@@ -67,10 +70,11 @@ const EditForm = () => {
     try {
       const params = {
         id,
+        created,
         body: note.body,
         label: note.label,
         title: note.title,
-        created
+        username: note.username
       };
       await axios.patch(`${config.api.invokeUrl}/products/${id}`, params);
 
@@ -95,11 +99,12 @@ const EditForm = () => {
 
   return (
     <Content>
-      {isEmpty(note) === false && (
+      {!isEmpty(note) && (
         <form onSubmit={event => handleEditNoteOnSubmit(note.id, event)}>
           <Box display="flex" flexDirection="column" alignItems="flex-end">
             <Input
               label="Title"
+              type="text"
               value={note.title}
               onChange={onEditNoteTitleChange}
             />

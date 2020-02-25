@@ -10,17 +10,19 @@ import Tags from './Tags';
 import SaveIcon from '@material-ui/icons/Save';
 const config = require('../config.json');
 
-const NewForm = () => {
+const NewForm = ({ auth }) => {
   let history = useHistory();
   const today = new Date();
   const created = today.getTime();
+  const { user } = auth;
 
   const initialState = {
-    title: '',
-    body: '',
     id: uuidv4(),
     created,
-    label: []
+    title: '',
+    body: '',
+    label: [],
+    username: user.username
   };
   const [newEntry, setNewEntry] = useState(initialState);
 
@@ -32,7 +34,8 @@ const NewForm = () => {
         title: newEntry.title,
         body: newEntry.body,
         created: newEntry.created,
-        label: newEntry.label
+        label: newEntry.label,
+        username: newEntry.username
       };
       await axios.post(`${config.api.invokeUrl}/products/${id}`, params);
       setNewEntry(initialState);
@@ -60,6 +63,7 @@ const NewForm = () => {
         <Box display="flex" flexDirection="column" alignItems="flex-end">
           <Input
             label="Title"
+            type="text"
             value={newEntry.title}
             onChange={onAddNoteTitleChange}
           />

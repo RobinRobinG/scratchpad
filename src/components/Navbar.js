@@ -20,9 +20,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function renderNewButton(pathname, history) {
-  if (pathname !== '/new') {
+  if (pathname !== '/') {
     return (
-      <Button color="primary" size="small" onClick={() => history.push('/new')}>
+      <Button color="primary" size="small" onClick={() => history.push('/')}>
         Add new
       </Button>
     );
@@ -60,7 +60,7 @@ function Navbar({ auth }) {
   };
 
   const handleLogInOnClick = event => {
-    history.push('/');
+    history.push('/login');
     setAnchorEl(null);
   };
 
@@ -93,7 +93,7 @@ function Navbar({ auth }) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      {!isAuthenticated && pathname !== '/' && (
+      {!isAuthenticated && pathname !== '/login' && (
         <MenuItem onClick={handleLogInOnClick}>Login</MenuItem>
       )}
       {!isAuthenticated && pathname !== '/register' && (

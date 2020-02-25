@@ -65,7 +65,7 @@ const App = () => {
             />
             <Route
               exact
-              path="/new"
+              path="/"
               render={props => <NewForm {...props} auth={authProps} />}
             />
             <Route
@@ -92,7 +92,7 @@ const App = () => {
             />
             <Route
               exact
-              path="/"
+              path="/login"
               render={props => <LogIn {...props} auth={authProps} />}
             />
             <Redirect from="*" to="/" />

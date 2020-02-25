@@ -98,7 +98,7 @@ const Register = () => {
             onChange={confirmPasswordOnChange}
           />
           <Typography gutterBottom>
-            <Link href="/">Already have an account?</Link>
+            <Link href="/login">Already have an account?</Link>
           </Typography>
           <Box alignSelf="flex-end">
             <Button

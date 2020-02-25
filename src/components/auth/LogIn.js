@@ -38,7 +38,7 @@ const LogIn = ({ auth }) => {
       const signedInUser = await Auth.signIn(username, password);
       setIsAuthenticated(true);
       setUser(signedInUser);
-      history.push('/new');
+      history.push('/');
     } catch (error) {
       let err = null;
       !error.message ? (err = { message: error }) : (err = error);

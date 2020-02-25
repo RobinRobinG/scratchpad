@@ -33,9 +33,7 @@ const EditForm = ({ auth }) => {
     id,
     title: '',
     body: '',
-    label: [],
-    created: '',
-    username: user.username
+    label: []
   });
 
   useEffect(() => {
@@ -74,7 +72,7 @@ const EditForm = ({ auth }) => {
         body: note.body,
         label: note.label,
         title: note.title,
-        username: note.username
+        username: user.username
       };
       await axios.patch(`${config.api.invokeUrl}/products/${id}`, params);
 

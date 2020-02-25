@@ -18,11 +18,9 @@ const NewForm = ({ auth }) => {
 
   const initialState = {
     id: uuidv4(),
-    created,
     title: '',
     body: '',
-    label: [],
-    username: user.username
+    label: []
   };
   const [newEntry, setNewEntry] = useState(initialState);
 
@@ -33,9 +31,9 @@ const NewForm = ({ auth }) => {
         id,
         title: newEntry.title,
         body: newEntry.body,
-        created: newEntry.created,
         label: newEntry.label,
-        username: newEntry.username
+        created,
+        username: user.username
       };
       await axios.post(`${config.api.invokeUrl}/products/${id}`, params);
       setNewEntry(initialState);

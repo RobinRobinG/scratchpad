@@ -41,6 +41,7 @@ async function handleLogOut({ event, setIsAuthenticated, setUser, history }) {
     setIsAuthenticated(false);
     setUser(null);
     history.push('/');
+    console.log({ history });
   } catch (error) {
     console.log(error.message);
   }

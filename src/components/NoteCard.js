@@ -85,7 +85,7 @@ function NoteCard({ note, handleDeleteNote, user }) {
     history.push(`/edit/${id}`);
   };
 
-  const displayName = username ? username : 'Anonymous';
+  const displayName = username ? username : 'Mysterious stranger';
   const avatarLabel = displayName.charAt(0).toUpperCase();
 
   return (

@@ -20,11 +20,13 @@ import ChangePasswordConfirmation from './components/auth/ChangePasswordConfirma
 import Welcome from './components/auth/Welcome';
 import NewBoardForm from './components/NewBoardForm';
 import Boards from './components/Boards';
+import Board from './components/Board';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isAuthenticating, setIsAuthenticating] = useState(true);
   const [user, setUser] = useState(null);
+  const [boardId, setBoardId] = useState(null);
 
   const getCurrentUserSession = async () => {
     try {
@@ -47,7 +49,9 @@ const App = () => {
     isAuthenticated,
     user,
     setIsAuthenticated,
-    setUser
+    setUser,
+    boardId,
+    setBoardId
   };
 
   return (
@@ -106,6 +110,10 @@ const App = () => {
               exact
               path="/boards"
               render={props => <Boards {...props} auth={authProps} />}
+            />
+            <Route
+              path="/board/:id"
+              render={props => <Board {...props} auth={authProps} />}
             />
             <Redirect from="*" to="/" />
           </Switch>

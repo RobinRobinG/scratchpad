@@ -36,7 +36,7 @@ const Boards = () => {
   const classes = useStyles();
   const [boards, setBoards] = useState([]);
   const [open, setOpen] = React.useState(true);
-
+  console.log({ boards });
   useEffect(() => {
     const fetchBoards = async () => {
       try {
@@ -55,12 +55,12 @@ const Boards = () => {
     <Content>
       {boards && boards.length > 0 ? (
         boards.map((board, index) => {
-          const { title, timestamp } = board;
+          const { id, title, timestamp } = board;
           const date = format(new Date(timestamp), 'MMMM dd, yyyy h:mm aaaa');
 
           const handleOnClick = event => {
             event.preventDefault();
-            history.push(`/board/${title}`);
+            history.push(`/board/${id}`);
           };
 
           return (

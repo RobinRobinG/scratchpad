@@ -19,10 +19,17 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function renderNewButton(pathname, history) {
+function renderNewButton(pathname, history, setBoardId) {
   if (pathname !== '/') {
     return (
-      <Button color="primary" size="small" onClick={() => history.push('/')}>
+      <Button
+        color="primary"
+        size="small"
+        onClick={() => {
+          setBoardId(null);
+          history.push('/');
+        }}
+      >
         Add new
       </Button>
     );
@@ -37,7 +44,21 @@ function renderAllButton(pathname, history) {
         size="small"
         onClick={() => history.push('/notes')}
       >
-        View all
+        View notes
+      </Button>
+    );
+  }
+}
+
+function renderBoardsButton(pathname, history) {
+  if (pathname !== '/boards') {
+    return (
+      <Button
+        color="primary"
+        size="small"
+        onClick={() => history.push('/boards')}
+      >
+        View boards
       </Button>
     );
   }
@@ -47,7 +68,7 @@ function Navbar({ auth }) {
   const classes = useStyles();
   const { pathname } = useLocation();
   const history = useHistory();
-  const { isAuthenticated, setIsAuthenticated, setUser } = auth;
+  const { isAuthenticated, setIsAuthenticated, setUser, setBoardId } = auth;
   const [anchorEl, setAnchorEl] = useState(null);
   const isMenuOpen = Boolean(anchorEl);
 
@@ -111,8 +132,9 @@ function Navbar({ auth }) {
           <Typography variant="h6" color="primary" className={classes.grow}>
             🗒 Notes
           </Typography>
-          {renderNewButton(pathname, history)}
+          {renderNewButton(pathname, history, setBoardId)}
           {renderAllButton(pathname, history)}
+          {renderBoardsButton(pathname, history)}
           <IconButton
             edge="end"
             aria-label="user login and register"

@@ -14,13 +14,14 @@ const NewForm = ({ auth }) => {
   let history = useHistory();
   const today = new Date();
   const created = today.getTime();
-  const { user } = auth;
+  const { user, boardId } = auth;
 
   const initialState = {
     id: uuidv4(),
     title: '',
     body: '',
-    label: []
+    label: [],
+    boardid: null
   };
   const [newEntry, setNewEntry] = useState(initialState);
 
@@ -34,6 +35,7 @@ const NewForm = ({ auth }) => {
         title: newEntry.title,
         body: newEntry.body,
         label: newEntry.label,
+        boardid: boardId,
         created,
         username
       };

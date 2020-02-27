@@ -29,7 +29,7 @@ const Notes = ({ auth }) => {
   const handleDeleteNote = async (id, event) => {
     event.preventDefault();
     try {
-      await axios.delete(`${config.api.invokeUrl}/products/${id}`);
+      await axios.delete(`${config.api.notes.invokeUrl}/products/${id}`);
       const updatedNotes = [...notes].filter(note => note.id !== id);
       const sortedNotes = sortByDate(updatedNotes);
       setNotes(sortedNotes);
@@ -42,7 +42,7 @@ const Notes = ({ auth }) => {
   useEffect(() => {
     const fetchNotes = async () => {
       try {
-        const res = await axios.get(`${config.api.invokeUrl}/products`);
+        const res = await axios.get(`${config.api.notes.invokeUrl}/products`);
         const sortedNotes = sortByDate(res.data);
         setNotes(sortedNotes);
         setFilteredNotes(sortedNotes);

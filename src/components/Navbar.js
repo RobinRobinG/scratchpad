@@ -76,7 +76,6 @@ function Navbar({ auth }) {
       setIsAuthenticated(false);
       setUser(null);
       history.push('/');
-      console.log({ history });
     } catch (error) {
       console.log(error.message);
     }

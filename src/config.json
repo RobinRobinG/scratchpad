@@ -1,6 +1,11 @@
 {
   "api": {
-    "invokeUrl": "https://apghi0rhm8.execute-api.us-west-2.amazonaws.com/prod"
+    "notes": {
+      "invokeUrl": "https://apghi0rhm8.execute-api.us-west-2.amazonaws.com/prod"
+    },
+    "board": {
+      "invokeUrl": "https://sju33o9oug.execute-api.us-west-2.amazonaws.com/prod"
+    }
   },
   "cognito": {
     "REGION": "us-west-2",

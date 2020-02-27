@@ -18,6 +18,8 @@ import LogIn from './components/auth/LogIn';
 import ForgotPassword from './components/auth/ForgotPassword';
 import ChangePasswordConfirmation from './components/auth/ChangePasswordConfirmation';
 import Welcome from './components/auth/Welcome';
+import NewBoardForm from './components/NewBoardForm';
+import Boards from './components/Boards';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -94,6 +96,16 @@ const App = () => {
               exact
               path="/login"
               render={props => <LogIn {...props} auth={authProps} />}
+            />
+            <Route
+              exact
+              path="/newboard"
+              render={props => <NewBoardForm {...props} auth={authProps} />}
+            />
+            <Route
+              exact
+              path="/boards"
+              render={props => <Boards {...props} auth={authProps} />}
             />
             <Redirect from="*" to="/" />
           </Switch>

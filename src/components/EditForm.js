@@ -39,7 +39,7 @@ const EditForm = ({ auth }) => {
   useEffect(() => {
     const fetchNotes = async () => {
       try {
-        const res = await axios.get(`${config.api.invokeUrl}/products`);
+        const res = await axios.get(`${config.api.notes.invokeUrl}/products`);
 
         const noteToUpdate = [...res.data].find(note => note.id === id);
 
@@ -66,7 +66,7 @@ const EditForm = ({ auth }) => {
     const today = new Date();
     const created = today.getTime();
     const username = user ? user.username : null;
-    
+
     try {
       const params = {
         id,
@@ -76,7 +76,7 @@ const EditForm = ({ auth }) => {
         title: note.title,
         username
       };
-      await axios.patch(`${config.api.invokeUrl}/products/${id}`, params);
+      await axios.patch(`${config.api.notes.invokeUrl}/products/${id}`, params);
 
       history.push('/notes');
     } catch (error) {
@@ -87,7 +87,7 @@ const EditForm = ({ auth }) => {
   const handleDeleteNote = async (id, event) => {
     event.preventDefault();
     try {
-      await axios.delete(`${config.api.invokeUrl}/products/${id}`);
+      await axios.delete(`${config.api.notes.invokeUrl}/products/${id}`);
 
       history.push('/notes');
     } catch (error) {

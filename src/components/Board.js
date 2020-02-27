@@ -44,7 +44,7 @@ const Board = ({ auth }) => {
   return (
     <Content>
       <Button variant="contained" color="primary" onClick={handleOnClick}>
-        Open
+        Add new
       </Button>
       {notes && notes.length > 0 ? (
         notes.map(note => <NoteCard note={note} key={note.id} user={user} />)

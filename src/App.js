@@ -12,7 +12,6 @@ import Notes from './components/Notes';
 import EditForm from './components/EditForm';
 import Footer from './components/Footer';
 import { Auth } from 'aws-amplify';
-import './App.css';
 import Register from './components/auth/Register';
 import LogIn from './components/auth/LogIn';
 import ForgotPassword from './components/auth/ForgotPassword';
@@ -21,6 +20,7 @@ import Welcome from './components/auth/Welcome';
 import NewBoardForm from './components/NewBoardForm';
 import Boards from './components/Boards';
 import Board from './components/Board';
+import './App.css';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -30,8 +30,7 @@ const App = () => {
 
   const getCurrentUserSession = async () => {
     try {
-      const session = await Auth.currentSession();
-      console.log({ session });
+      await Auth.currentSession();
       setIsAuthenticated(true);
       const currentUser = await Auth.currentAuthenticatedUser();
       setUser(currentUser);

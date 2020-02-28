@@ -30,7 +30,7 @@ function renderNewNoteButton(pathname, history, setBoardId) {
           history.push('/');
         }}
       >
-        Add note
+        New note
       </Button>
     );
   }
@@ -44,7 +44,7 @@ function renderAllButton(pathname, history) {
         size="small"
         onClick={() => history.push('/notes')}
       >
-        View notes
+        Notes
       </Button>
     );
   }
@@ -76,13 +76,19 @@ function Navbar({ auth }) {
     setAnchorEl(null);
   };
 
+  const handleBoardsOnClick = event => {
+    setBoardId(null);
+    history.push('/boards');
+    setAnchorEl(null);
+  };
+
   const handleLogOutOnClick = async event => {
     event.preventDefault();
     try {
       await Auth.signOut();
       setIsAuthenticated(false);
-      setUser(null);
       history.push('/');
+      setUser(null);
     } catch (error) {
       console.log(error.message);
     }
@@ -105,18 +111,8 @@ function Navbar({ auth }) {
       {!isAuthenticated && pathname !== '/register' && (
         <MenuItem onClick={handleRegisterOnClick}>Register</MenuItem>
       )}
-      {isAuthenticated && pathname !== '/newboard' && (
-        <MenuItem
-          onClick={() => {
-            setBoardId(null);
-            history.push('/newboard');
-          }}
-        >
-          New Board
-        </MenuItem>
-      )}
       {isAuthenticated && pathname !== '/boards' && (
-        <MenuItem onClick={() => history.push('/boards')}>View Boards</MenuItem>
+        <MenuItem onClick={handleBoardsOnClick}>Boards</MenuItem>
       )}
       {isAuthenticated && (
         <MenuItem onClick={handleLogOutOnClick}>Logout</MenuItem>

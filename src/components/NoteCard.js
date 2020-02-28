@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -33,6 +33,9 @@ const useStyles = makeStyles(theme => ({
   avatar: {
     color: '#fff',
     backgroundColor: theme.palette.info.main
+  },
+  box: {
+    margin: '1.5rem'
   }
 }));
 
@@ -88,6 +91,25 @@ function NoteCard({ note, handleDeleteNote, user }) {
   const displayName = username ? username : 'Mysterious stranger';
   const avatarLabel = displayName.charAt(0).toUpperCase();
 
+  function renderCardAction() {
+    if (user && username === user.username) {
+      return (
+        <Fragment>
+          <IconButton aria-label="edit" onClick={handleNoteEditOnClick}>
+            <EditIcon />
+          </IconButton>
+          <IconButton
+            aria-label="delete"
+            onClick={event => handleDeleteNote(id, event)}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </Fragment>
+      );
+    }
+    return <Box className={classes.box}></Box>;
+  }
+
   return (
     <Card raised className={classes.root}>
       <CardHeader
@@ -106,7 +128,6 @@ function NoteCard({ note, handleDeleteNote, user }) {
           {body}
         </Typography>
       </CardContent>
-
       <Box className={classes.grow} mx={1}>
         <CardActions>
           <Typography
@@ -116,15 +137,7 @@ function NoteCard({ note, handleDeleteNote, user }) {
           >
             {date}
           </Typography>
-          <IconButton aria-label="edit" onClick={handleNoteEditOnClick}>
-            <EditIcon />
-          </IconButton>
-          <IconButton
-            aria-label="delete"
-            onClick={event => handleDeleteNote(id, event)}
-          >
-            <DeleteIcon />
-          </IconButton>
+          {renderCardAction()}
         </CardActions>
       </Box>
     </Card>

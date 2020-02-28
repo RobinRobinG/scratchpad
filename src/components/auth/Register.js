@@ -37,14 +37,14 @@ const Register = () => {
 
     const { username, email, password } = formValues;
     try {
-      const signUpResponse = await Auth.signUp({
+      await Auth.signUp({
         username,
         password,
         attributes: {
           email
         }
       });
-      console.log({ signUpResponse });
+
       history.push('/welcome');
     } catch (error) {
       let err = null;

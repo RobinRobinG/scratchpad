@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import Content from './Content';
 import NoteCard from './NoteCard';
+import PageHeader from './PageHeader';
 import Chips from './Chips';
 import LoadingSpinner from './LoadingSpinner';
 import axios from 'axios';
@@ -42,8 +43,11 @@ const Notes = ({ auth }) => {
   useEffect(() => {
     const fetchNotes = async () => {
       try {
-        const res = await axios.get(`${config.api.notes.invokeUrl}/products`);
-        const sortedNotes = sortByDate(res.data);
+        const { data } = await axios.get(
+          `${config.api.notes.invokeUrl}/products`
+        );
+        const filteredData = data.filter(note => note.boardid === null);
+        const sortedNotes = sortByDate(filteredData);
         setNotes(sortedNotes);
         setFilteredNotes(sortedNotes);
         setOpen(false);
@@ -58,21 +62,24 @@ const Notes = ({ auth }) => {
   const tags = ['All', 'Work', 'Personal'];
 
   return (
-    <Content>
-      <Chips tags={tags} handleClick={chipsOnClick} />
-      {filteredNotes && notes.length > 0 ? (
-        filteredNotes.map(note => (
-          <NoteCard
-            note={note}
-            key={note.id}
-            handleDeleteNote={handleDeleteNote}
-            user={user}
-          />
-        ))
-      ) : (
-        <LoadingSpinner open={open} />
-      )}
-    </Content>
+    <Fragment>
+      <PageHeader title="Notes" subTitle="Add a note!" />
+      <Content>
+        <Chips tags={tags} handleClick={chipsOnClick} />
+        {filteredNotes && notes.length > 0 ? (
+          filteredNotes.map(note => (
+            <NoteCard
+              note={note}
+              key={note.id}
+              handleDeleteNote={handleDeleteNote}
+              user={user}
+            />
+          ))
+        ) : (
+          <LoadingSpinner open={open} />
+        )}
+      </Content>
+    </Fragment>
   );
 };
 

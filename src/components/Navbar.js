@@ -50,37 +50,6 @@ function renderAllButton(pathname, history) {
   }
 }
 
-function renderNewBoardButton(pathname, history, setBoardId) {
-  if (pathname !== '/newboard') {
-    return (
-      <Button
-        color="primary"
-        size="small"
-        onClick={() => {
-          setBoardId(null);
-          history.push('/newboard');
-        }}
-      >
-        Add board
-      </Button>
-    );
-  }
-}
-
-function renderBoardsButton(pathname, history) {
-  if (pathname !== '/boards') {
-    return (
-      <Button
-        color="primary"
-        size="small"
-        onClick={() => history.push('/boards')}
-      >
-        View boards
-      </Button>
-    );
-  }
-}
-
 function Navbar({ auth }) {
   const classes = useStyles();
   const { pathname } = useLocation();
@@ -136,6 +105,19 @@ function Navbar({ auth }) {
       {!isAuthenticated && pathname !== '/register' && (
         <MenuItem onClick={handleRegisterOnClick}>Register</MenuItem>
       )}
+      {isAuthenticated && pathname !== '/newboard' && (
+        <MenuItem
+          onClick={() => {
+            setBoardId(null);
+            history.push('/newboard');
+          }}
+        >
+          New Board
+        </MenuItem>
+      )}
+      {isAuthenticated && pathname !== '/boards' && (
+        <MenuItem onClick={() => history.push('/boards')}>View Boards</MenuItem>
+      )}
       {isAuthenticated && (
         <MenuItem onClick={handleLogOutOnClick}>Logout</MenuItem>
       )}
@@ -151,8 +133,6 @@ function Navbar({ auth }) {
           </Typography>
           {renderNewNoteButton(pathname, history, setBoardId)}
           {renderAllButton(pathname, history)}
-          {renderNewBoardButton(pathname, history, setBoardId)}
-          {renderBoardsButton(pathname, history)}
           <IconButton
             edge="end"
             aria-label="user login and register"

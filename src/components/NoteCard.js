@@ -34,6 +34,9 @@ const useStyles = makeStyles(theme => ({
     color: '#fff',
     backgroundColor: theme.palette.info.main
   },
+  body: {
+    whiteSpace: 'pre-wrap'
+  },
   box: {
     margin: '1.5rem'
   }
@@ -124,7 +127,12 @@ function NoteCard({ note, handleDeleteNote, user }) {
       />
       <Divider />
       <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
+        <Typography
+          variant="body2"
+          color="textSecondary"
+          component="p"
+          className={classes.body}
+        >
           {body}
         </Typography>
       </CardContent>

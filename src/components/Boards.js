@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Content from './Content';
 import LoadingSpinner from './LoadingSpinner';
-import { Card, CardHeader, Button } from '@material-ui/core';
+import { Card, CardHeader, IconButton } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import { format } from 'date-fns';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 const config = require('../config.json');
 
 const useStyles = makeStyles(theme => ({
@@ -14,22 +15,9 @@ const useStyles = makeStyles(theme => ({
     margin: '1.5rem 0'
   },
   action: {
-    margin: '1rem .5rem'
+    margin: '.8rem .5rem'
   }
 }));
-
-function getHeaderAction(handleOnClick, classes) {
-  return (
-    <Button
-      variant="contained"
-      className={classes.action}
-      color="primary"
-      onClick={handleOnClick}
-    >
-      Open
-    </Button>
-  );
-}
 
 const Boards = () => {
   let history = useHistory();
@@ -37,6 +25,7 @@ const Boards = () => {
   const [boards, setBoards] = useState([]);
   const [open, setOpen] = React.useState(true);
   console.log({ boards });
+
   useEffect(() => {
     const fetchBoards = async () => {
       try {
@@ -63,17 +52,25 @@ const Boards = () => {
             history.push(`/board/${id}`);
           };
 
+          function getHeaderAction() {
+            return (
+              <IconButton
+                aria-label="edit"
+                className={classes.action}
+                color="primary"
+                onClick={handleOnClick}
+              >
+                <ArrowForwardIcon />
+              </IconButton>
+            );
+          }
+
           return (
-            <Card
-              raised
-              className={classes.root}
-              key={index}
-              onClick={handleOnClick}
-            >
+            <Card raised className={classes.root} key={index}>
               <CardHeader
                 title={title}
                 subheader={date}
-                action={getHeaderAction(handleOnClick, classes)}
+                action={getHeaderAction()}
               />
             </Card>
           );

@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function renderNewButton(pathname, history, setBoardId) {
+function renderNewNoteButton(pathname, history, setBoardId) {
   if (pathname !== '/') {
     return (
       <Button
@@ -30,7 +30,7 @@ function renderNewButton(pathname, history, setBoardId) {
           history.push('/');
         }}
       >
-        Add new
+        Add note
       </Button>
     );
   }
@@ -45,6 +45,23 @@ function renderAllButton(pathname, history) {
         onClick={() => history.push('/notes')}
       >
         View notes
+      </Button>
+    );
+  }
+}
+
+function renderNewBoardButton(pathname, history, setBoardId) {
+  if (pathname !== '/newboard') {
+    return (
+      <Button
+        color="primary"
+        size="small"
+        onClick={() => {
+          setBoardId(null);
+          history.push('/newboard');
+        }}
+      >
+        Add board
       </Button>
     );
   }
@@ -132,8 +149,9 @@ function Navbar({ auth }) {
           <Typography variant="h6" color="primary" className={classes.grow}>
             🗒 Notes
           </Typography>
-          {renderNewButton(pathname, history, setBoardId)}
+          {renderNewNoteButton(pathname, history, setBoardId)}
           {renderAllButton(pathname, history)}
+          {renderNewBoardButton(pathname, history, setBoardId)}
           {renderBoardsButton(pathname, history)}
           <IconButton
             edge="end"

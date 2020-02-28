@@ -8,7 +8,7 @@ const useStyles = makeStyles({
   }
 });
 
-function Content(props) {
+const Content = props => {
   const classes = useStyles(props);
 
   return (
@@ -16,6 +16,6 @@ function Content(props) {
       {props.children}
     </Container>
   );
-}
+};
 
 export default Content;

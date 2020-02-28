@@ -35,7 +35,7 @@ const NewBoardForm = ({ auth }) => {
       };
       await axios.post(`${config.api.board.invokeUrl}/board`, params);
       setNewEntry(initialState);
-      history.push('/boards');
+      history.push(`/board/${id}`);
     } catch (error) {
       console.log(`An error has occurred: ${error}`);
     }

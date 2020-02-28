@@ -41,7 +41,7 @@ const NewForm = ({ auth }) => {
       };
       await axios.post(`${config.api.notes.invokeUrl}/products/${id}`, params);
       setNewEntry(initialState);
-      history.push('/notes');
+      boardId ? history.push(`/board/${boardId}`) : history.push('/notes');
     } catch (error) {
       console.log(`An error has occurred: ${error}`);
     }

@@ -74,7 +74,8 @@ const EditForm = ({ auth }) => {
         body: note.body,
         label: note.label,
         title: note.title,
-        username
+        username,
+        boardid: note.boardid
       };
       await axios.patch(`${config.api.notes.invokeUrl}/products/${id}`, params);
 

@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 import LoadingSpinner from './LoadingSpinner';
 import Content from './Content';
 import NoteCard from './NoteCard';
+import PageHeader from './PageHeader';
 import axios from 'axios';
 const config = require('../config.json');
 
@@ -22,6 +23,7 @@ const Board = ({ auth }) => {
     event.preventDefault();
     setBoardId(id);
     history.push('/');
+    console.log({ history });
   };
 
   useEffect(() => {
@@ -42,16 +44,19 @@ const Board = ({ auth }) => {
   }, [id]);
 
   return (
-    <Content>
-      <Button variant="contained" color="primary" onClick={handleOnClick}>
-        Add new
-      </Button>
-      {notes && notes.length > 0 ? (
-        notes.map(note => <NoteCard note={note} key={note.id} user={user} />)
-      ) : (
-        <LoadingSpinner open={open} />
-      )}
-    </Content>
+    <Fragment>
+      <PageHeader id={id} />
+      <Content>
+        <Button variant="contained" color="primary" onClick={handleOnClick}>
+          Add new
+        </Button>
+        {notes && notes.length > 0 ? (
+          notes.map(note => <NoteCard note={note} key={note.id} user={user} />)
+        ) : (
+          <LoadingSpinner open={open} />
+        )}
+      </Content>
+    </Fragment>
   );
 };
 

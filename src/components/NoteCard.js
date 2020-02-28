@@ -21,7 +21,7 @@ import { format } from 'date-fns';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    borderRadius: '1rem',
+    borderRadius: '.4rem',
     margin: '1rem 0'
   },
   chip: {
@@ -92,7 +92,7 @@ function NoteCard({ note, handleDeleteNote, user }) {
   const avatarLabel = displayName.charAt(0).toUpperCase();
 
   function renderCardAction() {
-    if (user && username === user.username) {
+    if ((user && username === user.username) || username === null) {
       return (
         <Fragment>
           <IconButton aria-label="edit" onClick={handleNoteEditOnClick}>

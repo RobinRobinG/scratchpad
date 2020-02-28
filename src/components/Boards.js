@@ -12,11 +12,10 @@ const config = require('../config.json');
 
 const useStyles = makeStyles(theme => ({
   root: {
-    borderRadius: '.5rem',
-    margin: '1.5rem 0'
+    margin: '1rem 0'
   },
   action: {
-    margin: '.8rem .5rem'
+    margin: '.8rem .5rem .4rem'
   }
 }));
 

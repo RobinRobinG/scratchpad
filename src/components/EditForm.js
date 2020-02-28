@@ -66,20 +66,20 @@ const EditForm = ({ auth }) => {
     const today = new Date();
     const created = today.getTime();
     const username = user ? user.username : null;
+    const { body, label, title, boardid } = note;
 
     try {
       const params = {
         id,
         created,
-        body: note.body,
-        label: note.label,
-        title: note.title,
+        body,
+        label,
+        title,
         username,
-        boardid: note.boardid
+        boardid
       };
       await axios.patch(`${config.api.notes.invokeUrl}/products/${id}`, params);
-
-      history.push('/notes');
+      boardid ? history.push(`/board/${boardid}`) : history.push('/notes');
     } catch (error) {
       console.log(`An error has occurred: ${error}`);
     }
@@ -87,10 +87,11 @@ const EditForm = ({ auth }) => {
 
   const handleDeleteNote = async (id, event) => {
     event.preventDefault();
+    const { boardid } = note;
     try {
       await axios.delete(`${config.api.notes.invokeUrl}/products/${id}`);
 
-      history.push('/notes');
+      boardid ? history.push(`/board/${boardid}`) : history.push('/notes');
     } catch (error) {
       console.log(`An error has occurred: ${error}`);
     }

@@ -110,7 +110,7 @@ const Board = ({ auth }) => {
           >
             New note
           </Button>
-          {board.length > 0 && board[0].creator === user.username && (
+          {board.length > 0 && user && board[0].creator === user.username && (
             <Button
               variant="outlined"
               color="secondary"

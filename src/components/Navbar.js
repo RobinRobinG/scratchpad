@@ -125,7 +125,10 @@ function Navbar({ auth }) {
       <AppBar position="sticky" color="default">
         <Toolbar variant="dense">
           <Typography variant="h6" color="primary" className={classes.grow}>
-            🗒 Notes
+            <span role="img" aria-label="note-book">
+              🗒
+            </span>{' '}
+            Scratchpad
           </Typography>
           {renderNewNoteButton(pathname, history, setBoardId)}
           {renderAllButton(pathname, history)}

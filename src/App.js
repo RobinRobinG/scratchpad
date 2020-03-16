@@ -20,9 +20,24 @@ import Welcome from './components/auth/Welcome';
 import NewBoardForm from './components/NewBoardForm';
 import Boards from './components/Boards';
 import Board from './components/Board';
+import { makeStyles } from '@material-ui/core/styles';
+import Background from './assets/background.svg';
 import './App.css';
 
+const useStyles = makeStyles({
+  root: {
+    flex: 1,
+    background: `url(${Background})`,
+    backgroundSize: '100% auto',
+    backgroundPosition: 'center bottom',
+    backgroundRepeat: 'no-repeat',
+    backgroundAttachment: 'local',
+    overflow: 'hidden'
+  }
+});
+
 const App = () => {
+  const classes = useStyles();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isAuthenticating, setIsAuthenticating] = useState(true);
   const [user, setUser] = useState(null);
@@ -55,7 +70,12 @@ const App = () => {
 
   return (
     !isAuthenticating && (
-      <Box display="flex" flexDirection="column" style={{ minHeight: '100vh' }}>
+      <Box
+        display="flex"
+        flexDirection="column"
+        className={classes.root}
+        style={{ minHeight: '100vh' }}
+      >
         <Router>
           <Navbar auth={authProps} />
           <Switch>

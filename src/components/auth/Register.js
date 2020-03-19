@@ -84,7 +84,10 @@ const Register = () => {
           <Box style={{ height: '2rem' }}>
             {errors && errors.blankfield && (
               <Typography variant="body1" color="error">
-                {errors.blankfield} can not be blank.
+                {errors.blankfield.charAt(0).toUpperCase() +
+                  errors.blankfield.slice(1) +
+                  ' '}
+                field cannot be blank.
               </Typography>
             )}
             {errors && errors.cognito && (

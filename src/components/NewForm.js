@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Box, Button } from '@material-ui/core';
+import { Box, Button, Typography } from '@material-ui/core';
+import Validate from './utility/FormValidation';
 import axios from 'axios';
 import uuidv4 from 'uuid/v4';
 import Content from './Content';
@@ -23,10 +24,22 @@ const NewForm = ({ auth }) => {
     label: [],
     boardid: null
   };
+
+  const initialErrors = {
+    blankfield: ''
+  };
+
   const [newEntry, setNewEntry] = useState(initialState);
+  const [errors, setErrors] = useState(initialErrors);
 
   const handleAddNoteOnSubmit = async (id, event) => {
     event.preventDefault();
+    setErrors(initialErrors);
+    const error = Validate(newEntry);
+    if (error) {
+      return setErrors({ ...errors, ...error });
+    }
+
     const username = user ? user.username : null;
 
     try {
@@ -41,27 +54,44 @@ const NewForm = ({ auth }) => {
       };
       await axios.post(`${config.api.notes.invokeUrl}/products/${id}`, params);
       setNewEntry(initialState);
-      boardId ? history.push(`/board/${boardId}`) : history.push('/notes');
+      return boardId
+        ? history.push(`/board/${boardId}`)
+        : history.push('/notes');
     } catch (error) {
       console.log(`An error has occurred: ${error}`);
     }
   };
 
-  const onAddNoteTitleChange = event =>
+  const onAddNoteTitleChange = event => {
+    setErrors(initialErrors);
     setNewEntry({ ...newEntry, title: event.target.value });
+  };
 
   const onSelectNoteLabelChange = event => {
+    setErrors(initialErrors);
     setNewEntry({ ...newEntry, label: event.target.value });
   };
 
-  const onAddNoteBodyChange = event =>
+  const onAddNoteBodyChange = event => {
+    setErrors(initialErrors);
     setNewEntry({ ...newEntry, body: event.target.value });
+  };
 
   const labelOptions = ['Work', 'Personal'];
 
   return (
     <Content>
       <form onSubmit={event => handleAddNoteOnSubmit(newEntry.id, event)}>
+        <Box style={{ height: '2rem' }}>
+          {errors && errors.blankfield && (
+            <Typography variant="body1" color="error">
+              {errors.blankfield.charAt(0).toUpperCase() +
+                errors.blankfield.slice(1) +
+                ' '}
+              field cannot be blank.
+            </Typography>
+          )}
+        </Box>
         <Box display="flex" flexDirection="column" alignItems="flex-end">
           <Input
             label="Title"

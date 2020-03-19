@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Box, Button } from '@material-ui/core';
+import { Box, Button, Typography } from '@material-ui/core';
+import Validate from './utility/FormValidation';
 import axios from 'axios';
 import uuidv4 from 'uuid/v4';
 import Content from './Content';
@@ -20,10 +21,22 @@ const NewBoardForm = ({ auth }) => {
     creator: '',
     title: ''
   };
+
+  const initialErrors = {
+    blankfield: ''
+  };
+
   const [newEntry, setNewEntry] = useState(initialState);
+  const [errors, setErrors] = useState(initialErrors);
 
   const handleAddBoardOnSubmit = async (id, event) => {
     event.preventDefault();
+    setErrors(initialErrors);
+    const error = Validate(newEntry);
+    if (error) {
+      return setErrors({ ...errors, ...error });
+    }
+
     const creator = user ? user.username : null;
 
     try {
@@ -35,18 +48,30 @@ const NewBoardForm = ({ auth }) => {
       };
       await axios.post(`${config.api.board.invokeUrl}/board`, params);
       setNewEntry(initialState);
-      history.push(`/board/${id}`);
+      return history.push(`/board/${id}`);
     } catch (error) {
       console.log(`An error has occurred: ${error}`);
     }
   };
 
-  const onAddBoardTitleChange = event =>
+  const onAddBoardTitleChange = event => {
+    setErrors(initialErrors);
     setNewEntry({ ...newEntry, title: event.target.value });
+  };
 
   return (
     <Content>
       <form onSubmit={event => handleAddBoardOnSubmit(newEntry.id, event)}>
+        <Box style={{ height: '2rem' }}>
+          {errors && errors.blankfield && (
+            <Typography variant="body1" color="error">
+              {errors.blankfield.charAt(0).toUpperCase() +
+                errors.blankfield.slice(1) +
+                ' '}
+              field cannot be blank.
+            </Typography>
+          )}
+        </Box>
         <Box display="flex" flexDirection="column" alignItems="flex-end">
           <Input
             label="Title"

@@ -23,6 +23,12 @@ function validateForm(state) {
   if (state.hasOwnProperty('confirmpassword') && state.confirmpassword === '') {
     return { blankfield: 'confirmpassword' };
   }
+  if (state.hasOwnProperty('title') && state.title === '') {
+    return { blankfield: 'title' };
+  }
+  if (state.hasOwnProperty('body') && state.body === '') {
+    return { blankfield: 'note' };
+  }
   if (
     state.hasOwnProperty('password') &&
     state.hasOwnProperty('confirmpassword') &&

@@ -3,23 +3,22 @@ import { useHistory } from 'react-router-dom';
 import { Box, Button, Link, Typography } from '@material-ui/core';
 import Content from '../Content';
 import Input from '../Input';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Validate from '../utility/FormValidation';
 import { Auth } from 'aws-amplify';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
-const Register = () => {
+const ChangePassword = ({ auth }) => {
   let history = useHistory();
 
   const initialState = {
-    username: '',
-    email: '',
-    password: '',
+    oldpassword: '',
+    newpassword: '',
     confirmpassword: ''
   };
 
   const initialErrors = {
     cognito: null,
-    blankfield: '',
+    blankfield: false,
     passwordmatch: false
   };
 
@@ -35,40 +34,26 @@ const Register = () => {
       return setErrors({ ...errors, ...error });
     }
 
-    const { username, email, password } = formValues;
+    const { oldpassword, newpassword, confirmpassword } = formValues;
     try {
-      await Auth.signUp({
-        username,
-        password,
-        attributes: {
-          email
-        }
-      });
-
-      return history.push('/welcome');
+      const user = await Auth.currentAuthenticatedUser();
+      await Auth.changePassword(user, oldpassword, newpassword);
+      return history.push('/changepasswordconfirmation');
     } catch (error) {
       let err = null;
       !error.message ? (err = { message: error }) : (err = error);
-
       return setErrors({ ...errors, cognito: err });
     }
   };
 
-  const usernameOnChange = event => {
+  const oldPasswordOnChange = event => {
     setErrors(initialErrors);
-    setFormValues({ ...formValues, username: event.target.value });
+    setFormValues({ ...formValues, oldpassword: event.target.value });
   };
-
-  const emailOnChange = event => {
+  const newPasswordOnChange = event => {
     setErrors(initialErrors);
-    setFormValues({ ...formValues, email: event.target.value });
+    setFormValues({ ...formValues, newpassword: event.target.value });
   };
-
-  const passwordOnChange = event => {
-    setErrors(initialErrors);
-    setFormValues({ ...formValues, password: event.target.value });
-  };
-
   const confirmPasswordOnChange = event => {
     setErrors(initialErrors);
     setFormValues({ ...formValues, confirmpassword: event.target.value });
@@ -79,7 +64,7 @@ const Register = () => {
       <form onSubmit={handleSubmit}>
         <Box display="flex" flexDirection="column" alignItems="flex-start">
           <Typography variant="h5" gutterBottom>
-            Create an account
+            Change Password
           </Typography>
           <Box style={{ height: '2rem' }}>
             {errors && errors.blankfield && (
@@ -92,29 +77,19 @@ const Register = () => {
                 {errors.cognito.message}
               </Typography>
             )}
-            {errors && errors.passwordmatch === true && (
-              <Typography variant="body1" color="error">
-                The new password and the confirm password do not match.
-              </Typography>
-            )}
           </Box>
           <Input
-            label="Username"
-            type="text"
-            value={formValues.username}
-            onChange={usernameOnChange}
-          />
-          <Input
-            label="Email"
-            type="email"
-            value={formValues.email}
-            onChange={emailOnChange}
-          />
-          <Input
-            label="Password"
+            label="Old Password"
             type="password"
-            value={formValues.password}
-            onChange={passwordOnChange}
+            id="oldpassword"
+            value={formValues.oldpassword}
+            onChange={oldPasswordOnChange}
+          />
+          <Input
+            label="New Password"
+            type="password"
+            value={formValues.newpassword}
+            onChange={newPasswordOnChange}
           />
           <Input
             label="Confirm Password"
@@ -123,7 +98,7 @@ const Register = () => {
             onChange={confirmPasswordOnChange}
           />
           <Typography gutterBottom>
-            <Link href="/login">Already have an account?</Link>
+            <Link href="/forgotpassword">Forgot password?</Link>
           </Typography>
           <Box alignSelf="flex-end">
             <Button
@@ -133,7 +108,7 @@ const Register = () => {
               type="submit"
               startIcon={<AccountCircleIcon />}
             >
-              Register
+              Change Password
             </Button>
           </Box>
         </Box>
@@ -142,4 +117,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default ChangePassword;

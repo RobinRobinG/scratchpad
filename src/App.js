@@ -16,6 +16,7 @@ import Register from './components/auth/Register';
 import LogIn from './components/auth/LogIn';
 import ForgotPassword from './components/auth/ForgotPassword';
 import ChangePasswordConfirmation from './components/auth/ChangePasswordConfirmation';
+import ForgotPasswordVerification from './components/auth/ForgotPasswordVerification';
 import Welcome from './components/auth/Welcome';
 import NewBoardForm from './components/NewBoardForm';
 import Boards from './components/Boards';
@@ -48,11 +49,11 @@ const App = () => {
       await Auth.currentSession();
       setIsAuthenticated(true);
       const currentUser = await Auth.currentAuthenticatedUser();
-      setUser(currentUser);
+      return setUser(currentUser);
     } catch (error) {
-      console.log(error);
+      console.log({ error });
     }
-    setIsAuthenticating(false);
+    return setIsAuthenticating(false);
   };
 
   useEffect(() => {
@@ -98,11 +99,7 @@ const App = () => {
               path="/register"
               render={props => <Register {...props} auth={authProps} />}
             />
-            <Route
-              exact
-              path="/welcome"
-              render={props => <Welcome {...props} auth={authProps} />}
-            />
+            <Route exact path="/welcome" render={props => <Welcome />} />
             <Route
               exact
               path="/forgotpassword"
@@ -112,8 +109,13 @@ const App = () => {
               exact
               path="/forgotpasswordverification"
               render={props => (
-                <ChangePasswordConfirmation {...props} auth={authProps} />
+                <ForgotPasswordVerification {...props} auth={authProps} />
               )}
+            />
+            <Route
+              exact
+              path="/changepasswordconfirmation"
+              render={props => <ChangePasswordConfirmation />}
             />
             <Route
               exact

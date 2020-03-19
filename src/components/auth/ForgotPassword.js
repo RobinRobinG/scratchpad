@@ -8,6 +8,7 @@ import { Auth } from 'aws-amplify';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 const ForgotPassword = ({ auth }) => {
+  console.log('forget?');
   let history = useHistory();
 
   const initialState = {
@@ -16,7 +17,7 @@ const ForgotPassword = ({ auth }) => {
 
   const initialErrors = {
     cognito: null,
-    blankfield: false
+    blankfield: ''
   };
 
   const [formValues, setFormValues] = useState(initialState);
@@ -24,27 +25,26 @@ const ForgotPassword = ({ auth }) => {
 
   const handleSubmit = async event => {
     event.preventDefault();
-
     setErrors(initialErrors);
-    const error = Validate(event, formValues);
+
+    const error = Validate(formValues);
     if (error) {
-      setErrors({ ...errors, ...error });
+      return setErrors({ ...errors, ...error });
     }
 
     const { email } = formValues;
-
     try {
       await Auth.forgotPassword(email);
-      history.push('/forgotpasswordverification');
+      return history.push('/forgotpasswordverification');
     } catch (error) {
       let err = null;
       !error.message ? (err = { message: error }) : (err = error);
-
-      setErrors({ ...errors, cognito: err });
+      return setErrors({ ...errors, cognito: err });
     }
   };
 
   const emailOnChange = event => {
+    setErrors(initialErrors);
     setFormValues({ ...formValues, email: event.target.value });
   };
 
@@ -59,6 +59,18 @@ const ForgotPassword = ({ auth }) => {
             Please enter the email address associated with your account and
             we'll email you a password reset link.
           </Typography>
+          <Box style={{ height: '2rem' }}>
+            {errors && errors.blankfield && (
+              <Typography variant="body1" color="error">
+                {errors.blankfield} can not be blank.
+              </Typography>
+            )}
+            {errors && errors.cognito && (
+              <Typography variant="body1" color="error">
+                {errors.cognito.message}
+              </Typography>
+            )}
+          </Box>
           <Input
             label="Email"
             type="email"

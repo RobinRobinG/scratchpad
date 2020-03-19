@@ -3,9 +3,9 @@ import { useHistory } from 'react-router-dom';
 import { Box, Button, Link, Typography } from '@material-ui/core';
 import Content from '../Content';
 import Input from '../Input';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Validate from '../utility/FormValidation';
 import { Auth } from 'aws-amplify';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 const LogIn = ({ auth }) => {
   let history = useHistory();
@@ -17,7 +17,7 @@ const LogIn = ({ auth }) => {
 
   const initialErrors = {
     cognito: null,
-    blankfield: false
+    blankfield: ''
   };
 
   const [formValues, setFormValues] = useState(initialState);
@@ -25,11 +25,11 @@ const LogIn = ({ auth }) => {
 
   const handleSubmit = async event => {
     event.preventDefault();
-
     setErrors(initialErrors);
-    const error = Validate(event, formValues);
+
+    const error = Validate(formValues);
     if (error) {
-      setErrors({ ...errors, ...error });
+      return setErrors({ ...errors, ...error });
     }
 
     const { username, password } = formValues;
@@ -38,21 +38,23 @@ const LogIn = ({ auth }) => {
       const signedInUser = await Auth.signIn(username, password);
       setIsAuthenticated(true);
       setUser(signedInUser);
-      history.push('/');
+      return history.push('/');
     } catch (error) {
       let err = null;
       !error.message ? (err = { message: error }) : (err = error);
-
-      setErrors({ ...errors, cognito: err });
+      return setErrors({ ...errors, cognito: err });
     }
   };
 
   const usernameOnChange = event => {
+    setErrors(initialErrors);
     setFormValues({ ...formValues, username: event.target.value });
   };
 
-  const passwordOnChange = event =>
+  const passwordOnChange = event => {
+    setErrors(initialErrors);
     setFormValues({ ...formValues, password: event.target.value });
+  };
 
   return (
     <Content>
@@ -61,6 +63,18 @@ const LogIn = ({ auth }) => {
           <Typography variant="h5" gutterBottom>
             Login
           </Typography>
+          <Box style={{ height: '2rem' }}>
+            {errors && errors.blankfield && (
+              <Typography variant="body1" color="error">
+                {errors.blankfield} can not be blank.
+              </Typography>
+            )}
+            {errors && errors.cognito && (
+              <Typography variant="body1" color="error">
+                {errors.cognito.message}
+              </Typography>
+            )}
+          </Box>
           <Input
             label="Username or Email"
             type="text"

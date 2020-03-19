@@ -7,7 +7,7 @@ import Validate from '../utility/FormValidation';
 import { Auth } from 'aws-amplify';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
-const LogIn = ({ auth }) => {
+const ForgotPasswordVerification = ({ auth }) => {
   let history = useHistory();
 
   const initialState = {
@@ -18,7 +18,7 @@ const LogIn = ({ auth }) => {
 
   const initialErrors = {
     cognito: null,
-    blankfield: false
+    blankfield: ''
   };
 
   const [formValues, setFormValues] = useState(initialState);
@@ -26,11 +26,12 @@ const LogIn = ({ auth }) => {
 
   const handleSubmit = async event => {
     event.preventDefault();
-
     setErrors(initialErrors);
-    const error = Validate(event, formValues);
+
+    const error = Validate(formValues);
     if (error) {
-      setErrors({ ...errors, ...error });
+      console.log({ error });
+      return setErrors({ ...errors, ...error });
     }
 
     const { email, verificationcode, newpassword } = formValues;
@@ -43,24 +44,28 @@ const LogIn = ({ auth }) => {
       );
       setIsAuthenticated(true);
       setUser(signedInUser);
-      history.push('/changepasswordconfirmation');
+      return history.push('/changepasswordconfirmation');
     } catch (error) {
       let err = null;
       !error.message ? (err = { message: error }) : (err = error);
-
-      setErrors({ ...errors, cognito: err });
+      return setErrors({ ...errors, cognito: err });
     }
   };
 
   const verificationCodeOnChange = event => {
+    setErrors(initialErrors);
     setFormValues({ ...formValues, verificationcode: event.target.value });
   };
 
-  const emailOnChange = event =>
+  const emailOnChange = event => {
+    setErrors(initialErrors);
     setFormValues({ ...formValues, email: event.target.value });
+  };
 
-  const newPasswordOnChange = event =>
+  const newPasswordOnChange = event => {
+    setErrors(initialErrors);
     setFormValues({ ...formValues, newpassword: event.target.value });
+  };
 
   return (
     <Content>
@@ -73,6 +78,18 @@ const LogIn = ({ auth }) => {
             Please enter the verification code sent to your email address below,
             your email address and a new password.
           </Typography>
+          <Box style={{ height: '2rem' }}>
+            {errors && errors.blankfield && (
+              <Typography variant="body1" color="error">
+                {errors.blankfield} can not be blank.
+              </Typography>
+            )}
+            {errors && errors.cognito && (
+              <Typography variant="body1" color="error">
+                {errors.cognito.message}
+              </Typography>
+            )}
+          </Box>
           <Input
             label="Verification Code"
             type="text"
@@ -109,4 +126,4 @@ const LogIn = ({ auth }) => {
   );
 };
 
-export default LogIn;
+export default ForgotPasswordVerification;
